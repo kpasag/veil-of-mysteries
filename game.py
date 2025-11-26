@@ -10,6 +10,8 @@ foe. If the foe is not beaten in an encounter, the player will lose 1 hp. The ga
 HP reaches zero or when the player reaches the goal.
 """
 import random
+import combat
+import player
 
 
 def make_board(rows, columns):
@@ -55,17 +57,8 @@ def make_board(rows, columns):
     return board
 
 
-def make_character():
-    """
-    Create a dictionary representing the player's position and health.
-
-    :postcondition: create a character with a position of (0, 0) and 5 HP
-    :return: a dictionary containing the player's position and current HP
-
-    >>> make_character()
-    {'X-coordinate': 0, 'Y-coordinate': 0, 'Current HP': 5}
-    """
-    return {"X-coordinate": 0, "Y-coordinate": 0, "Current HP": 5}
+def welcome():
+    print("H")
 
 
 def game():
@@ -78,21 +71,21 @@ def game():
                     for the player movement until one of the two endings have been met: victory
                     or defeat
     """
-    rows = 5
-    columns = 5
+    rows = 10
+    columns = 10
     board = make_board(rows, columns)
-    character = make_character()
+    character = player.make_character()
     achieved_goal = False
     describe_current_location(board, character)
     while is_alive(character) and not achieved_goal:
         direction = get_user_choice()
         valid_move = validate_move(board, character, direction)
         if valid_move:
-            move_character(character, direction)
+            player.move_character(character, direction)
             describe_current_location(board, character)
             there_is_a_challenger = check_for_foes()
             if there_is_a_challenger:
-                guessing_game(character)
+                combat.guessing_game(character)
             achieved_goal = check_if_goal_attained(board, character)
         else:
             print("Please try again.")
@@ -207,38 +200,6 @@ def validate_move(board, character, direction):
     return True
 
 
-def move_character(character, direction):
-    """
-    Updates the player's position within the given direction.
-
-    :param character: a dictionary containing the player's current coordinate and HP
-    :param direction: a lowercase string representing the movement direction
-                      ('n', 'e', 'w', or 's')
-    :precondition: character is a dictionary and direction is a string
-    :postcondition: modifies the character dictionary to reflect the new coordinates
-                    based on the chosen direction
-
-    >>> my_character = {"X-coordinate": 2, "Y-coordinate": 2}
-    >>> move_character(my_character, "n")
-    >>> my_character["X-coordinate"]
-    1
-    >>> move_character(my_character, "e")
-    >>> my_character["Y-coordinate"]
-    3
-    >>> move_character(my_character, "s")
-    >>> my_character["X-coordinate"]
-    2
-    """
-    if direction == "n":
-        character["X-coordinate"] -= 1
-    elif direction == "e":
-        character["Y-coordinate"] += 1
-    elif direction == "w":
-        character["Y-coordinate"] -= 1
-    else:
-        character["X-coordinate"] += 1
-
-
 def check_if_goal_attained(board, character):
     """
     Check if the player has reached the bottom-right of the board
@@ -291,42 +252,6 @@ def check_for_foes():
                        "A\033[95m cat\033[0m stares at you, a faint\033[95m light glimmering in its pupil.\033[0m"]
         print(random.choice(backgrounds))
         return False
-
-
-def guessing_game(character):
-    """
-    Play a number guessing game from the number 1 to 5.
-
-    :param character: a dictionary containing the player's current coordinate and HP
-    :precondition: character is a string
-    :postcondition: reduces the player's HP by 1 if the answer is incorrect and prints
-                    an ambience string based on remaining HP
-    """
-    secret_number = random.randint(1, 5)
-    while True:
-        guess = input(f'"\033[95mLet’s play a little game,\033[0m" The \033[95mman\033[0m says softly. '
-                      f'"\033[95mGuess a number from {1} to {5}.\033[0m"\n'
-                      f'Enter your choice: ')
-        if not guess.isdigit():
-            print("\033[95mTry again.\033[0m")
-            continue
-        guess = int(guess)
-        if guess < secret_number or guess > secret_number:
-            print(f'\033[95mHe\033[0m smiles faintly. "\033[95mClose. the number was {secret_number}."')
-            character["Current HP"] -= 1
-            print(f"\033[91mYou lost one HP. \nHP left: {character["Current HP"]}\033[0m")
-            if character["Current HP"] == 4:
-                print("A chill seeps into\033[95m your thoughts\033[0m, and one of them no longer feels like yours.")
-            elif character["Current HP"] == 3:
-                print("\033[95mYour reflection\033[0m lags behind your movement — half a second late.")
-            elif character["Current HP"] == 2:
-                print("You hear\033[95m faint laughter\033[0m echo inside your skull. It sounds exactly like you.")
-            elif character["Current HP"] == 1:
-                print("\033[95mYour pulse\033[0m skips —\033[95m someone else’s heartbeat\033[0m matches yours.")
-            break
-        else:
-            print('"\033[92mCorrect... You truly are interesting,\033[0m" The \033[95mman\033[0m says.')
-            break
 
 
 def is_alive(character):
