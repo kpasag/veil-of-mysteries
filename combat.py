@@ -1,6 +1,15 @@
 import random
 
 
+def check_player_level(character):
+    if character["level"] <= 1:
+        guessing_game(character)
+    elif character["level"] <= 2:
+        wordle(character)
+    elif character["level"] <= 3:
+        pass
+
+
 def guessing_game(character):
     """
     Play a number guessing game from the number 1 to 5.
@@ -35,3 +44,7 @@ def guessing_game(character):
         else:
             print('"\033[92mCorrect... You truly are interesting,\033[0m" The \033[95mman\033[0m says.')
             break
+
+
+def wordle(character):
+    pass
