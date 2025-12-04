@@ -1,12 +1,39 @@
 import random
 
 
+def check_for_foes():
+    """
+    Determine whether the player encounters a foe after making a move.
+
+    :postcondition: prints an encounter description or ambient background message
+                    depending on the random outcome
+    :return: True if a foe is encountered, False otherwise
+    """
+    roll = random.randint(1, 4)  # returns an int between 1 and 100
+    if roll == 4:
+        print("\033[93mTime freezes. A \033[95mman\033[93m appears from the darkness, "
+              "adjusts his\033[95m monocle\033[93m and smiles at you.\033[0m")
+        return True
+    else:
+        backgrounds = ["A\033[95m woman\033[0m passes by, her gaze sharp behind a\033[95m monocle\033[0m.",
+                       "You turn your head, and for a moment,"
+                       "\033[95m your reflection\033[0m wears a\033[95m monocle\033[0m.",
+                       "You glimpse a\033[95m tall man\033[0m with a\033[95m monocle\033[0m"
+                       " down the corridor... then he’s gone.",
+                       "A\033[95m figure\033[0m with a hat and a flash of\033[95m glass at his eye\033[0m passes by...",
+                       "Your\033[95m shadow\033[0m tilts its head and\033[95m adjusts something\033[0m near its eye.",
+                       "A\033[95m crow\033[0m lands nearby, a small\033[95m glint of glass\033[0m over one eye.",
+                       "A\033[95m cat\033[0m stares at you, a faint\033[95m light glimmering in its pupil.\033[0m"]
+        print(random.choice(backgrounds))
+        return False
+
+
 def check_player_level(character):
-    if character["level"] <= 1:
+    if character["Level"] <= 1:
         guessing_game(character)
-    elif character["level"] <= 2:
+    elif character["Level"] <= 2:
         wordle(character)
-    elif character["level"] <= 3:
+    elif character["Level"] <= 3:
         pass
 
 

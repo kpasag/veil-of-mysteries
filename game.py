@@ -41,9 +41,9 @@ def game():
         if valid_move:
             player.move_character(character, direction)
             describe_current_location(board, character)
-            there_is_a_challenger = check_for_foes()
+            there_is_a_challenger = combat.check_for_foes()
             if there_is_a_challenger:
-                combat.guessing_game(character)
+                combat.check_player_level(character)
             achieved_goal = check_if_goal_attained(board, character)
         else:
             print("Please try again.")
@@ -162,33 +162,6 @@ def check_if_goal_attained(board, character):
     char_x_coord = character["X-coordinate"]
     char_y_coord = character["Y-coordinate"]
     return (max_row, max_col) == (char_x_coord, char_y_coord)
-
-
-def check_for_foes():
-    """
-    Determine whether the player encounters a foe after making a move.
-
-    :postcondition: prints an encounter description or ambient background message
-                    depending on the random outcome
-    :return: True if a foe is encountered, False otherwise
-    """
-    roll = random.randint(1, 4)  # returns an int between 1 and 100
-    if roll == 4:
-        print("\033[93mTime freezes. A \033[95mman\033[93m appears from the darkness, "
-              "adjusts his\033[95m monocle\033[93m and smiles at you.\033[0m")
-        return True
-    else:
-        backgrounds = ["A\033[95m woman\033[0m passes by, her gaze sharp behind a\033[95m monocle\033[0m.",
-                       "You turn your head, and for a moment,"
-                       "\033[95m your reflection\033[0m wears a\033[95m monocle\033[0m.",
-                       "You glimpse a\033[95m tall man\033[0m with a\033[95m monocle\033[0m"
-                       " down the corridor... then he’s gone.",
-                       "A\033[95m figure\033[0m with a hat and a flash of\033[95m glass at his eye\033[0m passes by...",
-                       "Your\033[95m shadow\033[0m tilts its head and\033[95m adjusts something\033[0m near its eye.",
-                       "A\033[95m crow\033[0m lands nearby, a small\033[95m glint of glass\033[0m over one eye.",
-                       "A\033[95m cat\033[0m stares at you, a faint\033[95m light glimmering in its pupil.\033[0m"]
-        print(random.choice(backgrounds))
-        return False
 
 
 def is_alive(character):
