@@ -2,20 +2,20 @@
 Kyle Pasag
 A01428389
 
-A single-player, text-based game based on the Lord of the Mysteries novel.
-The player starts with 5 hp and begins at the top-left of a 5x5 board (0,0). The player moves using:
-'N' for north, 'E' for east, 'W' for west, or 'S' for south. The main goal of the player
-is to reach the bottom-right corner of the board (4,4) while surviving occasional encounters from a
-foe. If the foe is not beaten in an encounter, the player will lose 1 hp. The game ends when the player's
-HP reaches zero or when the player reaches the goal.
+
 """
 import random
 import combat
 import player
+import game_board
+import json
 
 
-def welcome():
-    print("H")
+def json_text_printer(text):
+    with open('messages.json', 'r', encoding="utf-8") as data:
+        data_object = json.load(data)
+        for line in data_object[text]:
+            print(line)
 
 
 def game():
@@ -30,9 +30,10 @@ def game():
     """
     rows = 10
     columns = 10
-    board = make_board(rows, columns)
+    board = game_board.make_board(rows, columns)
     character = player.make_character()
     achieved_goal = False
+    json_text_printer("welcome_message")
     describe_current_location(board, character)
     while is_alive(character) and not achieved_goal:
         direction = get_user_choice()
@@ -47,30 +48,9 @@ def game():
         else:
             print("Please try again.")
     if is_alive(character) and achieved_goal:
-        print("\033[92m" + r"""
-            __     __                    _       
-            \ \   / /                   (_)      
-             \ \_/ /__  _   _  __      ___ _ __  
-              \   / _ \| | | | \ \ /\ / / | '_ \ 
-               | | (_) | |_| |  \ V  V /| | | | |
-               |_|\___/ \__,_|   \_/\_/ |_|_| |_|
-
-                                      """)
-        print("You have reached the end. For now, your mind is your own.\033[0m")
+        json_text_printer("win_message")
     if not is_alive(character):
-        print("\033[91m" + r"""
-           _____          __  __ ______    ______      ________ _____  
-          / ____|   /\   |  \/  |  ____|  / __ \ \    / /  ____|  __ \ 
-         | |  __   /  \  | \  / | |__    | |  | \ \  / /| |__  | |__) |
-         | | |_ | / /\ \ | |\/| |  __|   | |  | |\ \/ / |  __| |  _  / 
-         | |__| |/ ____ \| |  | | |____  | |__| | \  /  | |____| | \ \ 
-          \_____/_/    \_\_|  |_|______|  \____/   \/   |______|_|  \_\
-
-        """ + "\033[0m")
-        print("\033[95mYou smile. It’s not your smile anymore.")
-        print("Your hand rises on its own, adjusting a monocle that isn't yours.")
-        print("There is no you now. Only him.")
-        print('"Perfect." a voice says from inside your mouth.\033[0m')
+        json_text_printer("lost_message")
 
 
 def describe_current_location(board, character):
