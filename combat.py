@@ -59,18 +59,21 @@ def guessing_game(character):
             print(f'\033[95mHe\033[0m smiles faintly. "\033[95mClose. the number was {secret_number}."')
             character["Current HP"] -= 1
             print(f"\033[91mYou lost one HP. \nHP left: {character["Current HP"]}\033[0m")
-            if character["Current HP"] == 4:
-                print("A chill seeps into\033[95m your thoughts\033[0m, and one of them no longer feels like yours.")
-            elif character["Current HP"] == 3:
-                print("\033[95mYour reflection\033[0m lags behind your movement — half a second late.")
-            elif character["Current HP"] == 2:
-                print("You hear\033[95m faint laughter\033[0m echo inside your skull. It sounds exactly like you.")
-            elif character["Current HP"] == 1:
-                print("\033[95mYour pulse\033[0m skips —\033[95m someone else’s heartbeat\033[0m matches yours.")
             break
         else:
             print('"\033[92mCorrect... You truly are interesting,\033[0m" The \033[95mman\033[0m says.')
             break
+
+
+def health_checker(character):
+    if character["Current HP"] <= 4:
+        print("A chill seeps into\033[95m your thoughts\033[0m, and one of them no longer feels like yours.")
+    elif character["Current HP"] <= 3:
+        print("\033[95mYour reflection\033[0m lags behind your movement — half a second late.")
+    elif character["Current HP"] <= 2:
+        print("You hear\033[95m faint laughter\033[0m echo inside your skull. It sounds exactly like you.")
+    elif character["Current HP"] <= 1:
+        print("\033[95mYour pulse\033[0m skips —\033[95m someone else’s heartbeat\033[0m matches yours.")
 
 
 def wordle(character):
