@@ -4,7 +4,6 @@ A01428389
 
 
 """
-import random
 import combat
 import player
 import game_board

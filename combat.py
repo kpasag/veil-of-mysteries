@@ -1,3 +1,4 @@
+import json
 import random
 
 
@@ -15,15 +16,10 @@ def check_for_foes():
               "adjusts his\033[95m monocle\033[93m and smiles at you.\033[0m")
         return True
     else:
-        backgrounds = ["A\033[95m woman\033[0m passes by, her gaze sharp behind a\033[95m monocle\033[0m.",
-                       "You turn your head, and for a moment,"
-                       "\033[95m your reflection\033[0m wears a\033[95m monocle\033[0m.",
-                       "You glimpse a\033[95m tall man\033[0m with a\033[95m monocle\033[0m"
-                       " down the corridor... then he’s gone.",
-                       "A\033[95m figure\033[0m with a hat and a flash of\033[95m glass at his eye\033[0m passes by...",
-                       "Your\033[95m shadow\033[0m tilts its head and\033[95m adjusts something\033[0m near its eye.",
-                       "A\033[95m crow\033[0m lands nearby, a small\033[95m glint of glass\033[0m over one eye.",
-                       "A\033[95m cat\033[0m stares at you, a faint\033[95m light glimmering in its pupil.\033[0m"]
+        backgrounds = []
+        message = get_player_lose_hp_message("ambience")
+        for line in message:
+            backgrounds.append(line)
         print(random.choice(backgrounds))
         return False
 
@@ -57,7 +53,6 @@ def guessing_game(character):
         guess = int(guess)
         if guess < secret_number or guess > secret_number:
             print(f'\033[95mHe\033[0m smiles faintly. "\033[95mClose. the number was {secret_number}."')
-            character["Current HP"] -= 1
             print(f"\033[91mYou lost one HP. \nHP left: {character["Current HP"]}\033[0m")
             break
         else:
@@ -65,15 +60,16 @@ def guessing_game(character):
             break
 
 
-def health_checker(character):
-    if character["Current HP"] <= 4:
-        print("A chill seeps into\033[95m your thoughts\033[0m, and one of them no longer feels like yours.")
-    elif character["Current HP"] <= 3:
-        print("\033[95mYour reflection\033[0m lags behind your movement — half a second late.")
-    elif character["Current HP"] <= 2:
-        print("You hear\033[95m faint laughter\033[0m echo inside your skull. It sounds exactly like you.")
-    elif character["Current HP"] <= 1:
-        print("\033[95mYour pulse\033[0m skips —\033[95m someone else’s heartbeat\033[0m matches yours.")
+def get_player_lose_hp_message(text):
+    with open("messages.json", "r", encoding="utf-8") as data:
+        data_object = json.load(data)
+        yield from data_object[text]
+
+
+def player_lose_hp(character):
+    character["Current HP"] -= 1
+    lose_hp_message = get_player_lose_hp_message("player_lose_hp")
+    print(next(lose_hp_message))
 
 
 def wordle(character):
