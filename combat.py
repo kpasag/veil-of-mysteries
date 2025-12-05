@@ -53,22 +53,25 @@ def guessing_game(character):
         guess = int(guess)
         if guess < secret_number or guess > secret_number:
             print(f'\033[95mHe\033[0m smiles faintly. "\033[95mClose. the number was {secret_number}."')
-            print(f"\033[91mYou lost one HP. \nHP left: {character["Current HP"]}\033[0m")
+            player_lose_hp(character)
             break
         else:
             print('"\033[92mCorrect... You truly are interesting,\033[0m" The \033[95mman\033[0m says.')
             break
 
-
+# Make this reusable
 def get_player_lose_hp_message(text):
     with open("messages.json", "r", encoding="utf-8") as data:
         data_object = json.load(data)
-        yield from data_object[text]
+        yield from map(lambda text_line: text_line.replace("{PURPLE}", "\033[95m"), data_object)
+
+
 
 
 def player_lose_hp(character):
     character["Current HP"] -= 1
     lose_hp_message = get_player_lose_hp_message("player_lose_hp")
+    print(f"\033[91mYou lost one HP. \nHP left: {character["Current HP"]}\033[0m")
     print(next(lose_hp_message))
 
 
