@@ -48,8 +48,8 @@ def check_for_foes():
                     depending on the random outcome
     :return: True if a foe is encountered, False otherwise
     """
-    roll = random.randint(1, 8)
-    if roll == 8:
+    roll = random.randint(1, 10)
+    if roll == 10:
         print("\033[93mTime freezes. A \033[95mman\033[93m appears from the darkness, "
               "adjusts his\033[95m monocle\033[93m and smiles at you.\033[0m")
         return True
@@ -115,7 +115,7 @@ def wordle_feedback(answer, user_guess):
                 guess_feedback += "{YELLOW}" + user_guess[index]
             else:
                 guess_feedback += "{GREY}" + user_guess[index]
-    print(messages.colorize_text(guess_feedback + "{GREY}"))
+    print(messages.colorize_text(guess_feedback + "{GREY}").upper())
 
 
 def wordle():
@@ -123,7 +123,7 @@ def wordle():
     answer = random.choice(answers)
     attempt = 0
     while attempt < 6:
-        user_guess = input("Enter your guess: ")
+        user_guess = input("Enter your guess: ").lower()
         if user_guess == answer:
             print("You have defeated Amon")
             break
