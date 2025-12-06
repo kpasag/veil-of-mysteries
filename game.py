@@ -35,9 +35,15 @@ def game():
             player.move_character(character, direction)
             display_current_location(character, bosses, rows, columns)
             describe_current_location(board, character)
-            there_is_a_challenger = combat.check_for_foes()
-            if character["Level"] == 1 and there_is_a_challenger:
-                combat.check_player_level(character)
+            for boss in bosses:
+                if boss["alive"] and boss["X-coordinate"] == character["X-coordinate"] and \
+                        boss["Y-coordinate"] == character["X-coordinate"] and character["Level"] \
+                        == boss["Level_required"]:
+                    combat.fight_boss(character, bosses)
+            if character["Level"] == 1:
+                there_is_a_challenger = combat.check_for_foes()
+                if there_is_a_challenger:
+                    combat.check_player_level(character)
             achieved_goal = check_if_goal_attained(bosses)
     if is_alive(character) and achieved_goal:
         messages.print_text_from_json("win_message")
@@ -130,7 +136,7 @@ def check_if_goal_attained(bosses):
     """
     """
     for boss in bosses:
-        if boss["name"] == "Amon" and boss["alive"]:
+        if boss["name"] == "Amon, the God of Mischief" and boss["alive"]:
             return False
     return True
 
