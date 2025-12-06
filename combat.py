@@ -18,12 +18,15 @@ def generate_bosses(board):
     boss_one_pos, boss_two_pos, boss_three_pos = generate_boss_positions(board)
     boss_one = {
         "name": "Enzo, the Winner", "X-coordinate": boss_one_pos[0], "Y-coordinate": boss_one_pos[1],
+        "alive": True
     }
     boss_two = {
         "name": "Anderson, the Strongest Hunter", "X-coordinate": boss_two_pos[0], "Y-coordinate": boss_two_pos[1],
+        "alive": True
     }
     boss_three = {
         "name": "Amon, the God of Mischief", "X-coordinate": boss_three_pos[0], "Y-coordinate": boss_three_pos[1],
+        "alive": True
     }
     return boss_one, boss_two, boss_three
 
