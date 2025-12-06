@@ -25,7 +25,7 @@ def game():
     character = player.make_character()
     bosses = combat.generate_bosses(board)
     achieved_goal = False
-    messages.type_text(messages.return_text_from_json("welcome_message"), 0.01)
+    messages.type_text(messages.return_text_from_json("welcome_message"), 0.005)
     display_current_location(character, bosses, rows, columns)
     describe_current_location(board, character)
     while player.is_alive(character) and not achieved_goal:
@@ -45,9 +45,9 @@ def game():
                     combat.guessing_game(character)
             achieved_goal = check_if_goal_attained(bosses)
     if player.is_alive(character) and achieved_goal:
-        messages.print_text_from_json("win_message")
+        messages.type_text(messages.return_text_from_json("win_message"), 0.01)
     if not player.is_alive(character):
-        messages.print_text_from_json("lost_message")
+        messages.type_text(messages.return_text_from_json("lost_message"), 0.01)
 
 
 def display_current_location(character, bosses, rows, columns):
@@ -62,7 +62,7 @@ def display_current_location(character, bosses, rows, columns):
                 row_display += " B"
             else:
                 row_display += " ."
-        print(f" {row_display}")
+        messages.type_text(f" {row_display}", 0.001)
 
 
 def describe_current_location(board, character):
@@ -86,7 +86,7 @@ def describe_current_location(board, character):
     char_y_coordinate = character["Y-coordinate"]
     location = board[(char_x_coordinate, char_y_coordinate)]
     location_message = f"Current Location: {{CYAN}}({char_x_coordinate},{char_y_coordinate}){{GREY}}"
-    messages.type_text(messages.colorize_text(location_message))
+    messages.type_text(messages.colorize_text(location_message), 0.01)
     messages.type_text(f"You step into the {location}.")
 
 
