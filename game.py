@@ -37,8 +37,7 @@ def game():
             describe_current_location(board, character)
             for boss in bosses:
                 if boss["X-coordinate"] == character["X-coordinate"] and \
-                        boss["Y-coordinate"] == character["X-coordinate"] \
-                        and character["Level"] == boss["Level_required"]:
+                        boss["Y-coordinate"] == character["Y-coordinate"]:
                     combat.fight_boss(character, boss)
             if character["Level"] == 1:
                 there_is_a_challenger = combat.check_for_foes()
