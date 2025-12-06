@@ -90,11 +90,11 @@
     "{PURPLE}Amon pauses, monocle catching the faintest glow.{GREY} {GREEN}\"So you reach your ending...\nor your beginning.\nAscend — if you believe your mind can bear the truth.\"{GREY}"
   ],
   "victory_cycle": [
-    "{GREEN}Power settles into your veins… stronger than before.{GREY}",
-    "{GREEN}The fog recoils from your presence.{GREY}",
-    "{GREEN}You feel your mind sharpen, reality bending just slightly in your favor.{GREY}",
-    "{GREEN}Your path grows clearer… the maze fears your progress.{GREY}",
-    "{GREEN}The shadows whisper your name differently now.{GREY}"
+    "{GREEN}Levelled up! Power settles into your veins… stronger than before.{GREY}",
+    "{GREEN}Levelled up! The fog recoils from your presence.{GREY}",
+    "{GREEN}Levelled up! You feel your mind sharpen, reality bending just slightly in your favor.{GREY}",
+    "{GREEN}Levelled up! Your path grows clearer… the maze fears your progress.{GREY}",
+    "{GREEN}Levelled up! The shadows whisper your name differently now.{GREY}"
   ],
   "Hvin_intro": [
     "{BLUE}The air ripples.\nLetters twist into shapes that stare back at you.{GREY}\n",
