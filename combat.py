@@ -128,24 +128,24 @@ def wordle(character, boss):
     player_lose_hp(character)
     if not player.is_alive(character):
         return
-    ask_retry_wordle(character, boss)
+    ask_retry(character, boss, wordle)
 
 
-def ask_retry_wordle(character, boss):
+def ask_retry(character, boss, function):
     user_input = input("Try Wordle again? (y/n): ").lower().strip()
     try:
         valid = user_input[0]
     except IndexError:
         print("Please enter Y or N.")
-        ask_retry_wordle(character, boss)
+        ask_retry(character, boss, function)
     else:
         if valid == "y":
-            wordle(character, boss)
+            function(character, boss)
         elif valid == "n":
             return
         else:
             print("Invalid choice. Please enter Y or N.")
-            ask_retry_wordle(character, boss)
+            ask_retry(character, boss, function)
 
 
 def play_wordle_round(answer):
