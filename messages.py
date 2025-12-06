@@ -48,8 +48,7 @@ def yield_text_from_json(key):
 
 def print_text_from_json(key):
     json_data = get_json()
-    for line in json_data[key]:
-        print(colorize_text(line))
+    print([colorize_text(line) for line in json_data[key]])
 
 
 def colorize_text(text):
@@ -62,7 +61,4 @@ def colorize_text(text):
 
 def get_full_text(key):
     json_data = get_json()
-    combined_text = ""
-    for line in json_data[key]:
-        combined_text += colorize_text(line) + "\n"
-    return combined_text.rstrip("\n")
+    return "\n".join(colorize_text(line) for line in json_data[key])
