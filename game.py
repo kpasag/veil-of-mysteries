@@ -20,38 +20,41 @@ def game():
                     for the player movement until one of the two endings have been met: victory
                     or defeat
     """
-    rows = 10
-    columns = 10
+    rows, columns = 10, 10
     board = game_board.make_board(rows, columns)
     character = player.make_character()
+    bosses = combat.generate_bosses(board)
     achieved_goal = False
     messages.print_text_from_json("welcome_message")
-    display_current_location(character, rows, columns)
+    display_current_location(character, bosses, rows, columns)
     describe_current_location(board, character)
     while is_alive(character) and not achieved_goal:
         direction = messages.get_user_choice()
         valid_move = validate_move(board, character, direction)
         if valid_move:
             player.move_character(character, direction)
-            display_current_location(character, rows, columns)
+            display_current_location(character, bosses, rows, columns)
             describe_current_location(board, character)
             there_is_a_challenger = combat.check_for_foes()
-            if there_is_a_challenger:
+            if character["Level"] == 1 and there_is_a_challenger:
                 combat.check_player_level(character)
-            achieved_goal = check_if_goal_attained(board, character)
+            achieved_goal = check_if_goal_attained(bosses)
     if is_alive(character) and achieved_goal:
         messages.print_text_from_json("win_message")
     if not is_alive(character):
         messages.print_text_from_json("lost_message")
 
 
-def display_current_location(character, rows, columns):
+def display_current_location(character, bosses, rows, columns):
     print("\nMap:")
     for row in range(rows):
         row_display = ""
         for column in range(columns):
             if (column, row) == (character["X-coordinate"], character["Y-coordinate"]):
                 row_display += " P"
+            elif any(boss["alive"] and boss["X-coordinate"] == column
+                     and boss["Y-coordinate"] == row for boss in bosses):
+                row_display += " B"
             else:
                 row_display += " ."
         print(f" {row_display}")
@@ -123,31 +126,13 @@ def validate_move(board, character, direction):
         return True
 
 
-def check_if_goal_attained(board, character):
+def check_if_goal_attained(bosses):
     """
-    Check if the player has reached the bottom-right of the board
-
-    :param board: a dictionary representing the game board, where keys are a row and a column
-                  that represent a coordinate and the value is the room description
-    :param character: a dictionary containing the player's current coordinate and HP
-    :precondition: board and character are a dictionary
-    :postcondition: check if the player's current coordinate matches the goal coordinate
-                    which is in the bottom-right corner of the board
-    :return: True if the player has reached the goal, False otherwise
-
-    >>> my_board = {(0, 0): "Room 1", (0, 1): "Room 2", (1, 0): "Room 3", (1, 1): "Goal Room"}
-    >>> my_character = {"X-coordinate": 0, "Y-coordinate": 0, "Current HP": 5}
-    >>> check_if_goal_attained(my_board, my_character)
-    False
-    >>> my_character = {"X-coordinate": 1, "Y-coordinate": 1, "Current HP": 5}
-    >>> check_if_goal_attained(my_board, my_character)
-    True
     """
-    max_row = max(coordinate[0] for coordinate in board.keys())
-    max_col = max(coordinate[1] for coordinate in board.keys())
-    char_x_coord = character["X-coordinate"]
-    char_y_coord = character["Y-coordinate"]
-    return (max_row, max_col) == (char_x_coord, char_y_coord)
+    for boss in bosses:
+        if boss["name"] == "Amon" and boss["alive"]:
+            return False
+    return True
 
 
 def is_alive(character):
