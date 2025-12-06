@@ -1,4 +1,5 @@
 import json
+import time
 from itertools import cycle
 
 
@@ -69,3 +70,10 @@ def colorize_text(text):
 def get_full_text(key):
     json_data = get_json()
     return "\n".join(colorize_text(line) for line in json_data[key])
+
+
+def type_text(text, delay=0.03):
+    for letter in text:
+        print(letter, end="", flush=True)
+        time.sleep(delay)
+    print()
