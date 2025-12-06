@@ -44,3 +44,10 @@ Open a terminal in the project folder and run:
 
 ```bash
 python game.py
+```
+
+For windows:
+
+```bash
+py game.py
+```
