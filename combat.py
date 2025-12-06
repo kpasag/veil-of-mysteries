@@ -1,9 +1,11 @@
 import messages
 import random
 import player
+from typing import Callable, Generator
 
 
-def generate_boss_positions(board):
+def generate_boss_positions(board: dict[tuple[int, int], str]) \
+        -> tuple[tuple[int, int], tuple[int, int], tuple[int, int]]:
     possible_positions = list(board.keys())
     possible_positions.remove((0, 0))
     boss_one_pos = random.choice(possible_positions)
@@ -14,7 +16,7 @@ def generate_boss_positions(board):
     return boss_one_pos, boss_two_pos, boss_three_pos
 
 
-def generate_bosses(board):
+def generate_bosses(board: dict[tuple[int, int], str]) -> tuple[dict[str, int | str | bool], ...]:
     boss_one_pos, boss_two_pos, boss_three_pos = generate_boss_positions(board)
     boss_one = {
         "name": "Enzo, the Winner", "X-coordinate": boss_one_pos[0], "Y-coordinate": boss_one_pos[1],
@@ -31,7 +33,8 @@ def generate_bosses(board):
     return boss_one, boss_two, boss_three
 
 
-def fight_boss(character, boss, dialogue):
+def fight_boss(character: dict[str, int], boss: dict[str, int | str | bool],
+               dialogue: dict[str, Generator[str, None, None]]) -> None:
     if boss["alive"] and boss["Level_required"] <= character["Level"]:
         messages.type_text(messages.colorize_text(f"{{RED}}You are in the presence of {boss["name"]}.{{GREY}}"))
         if boss["name"] == "Enzo, the Winner":
@@ -48,7 +51,7 @@ def fight_boss(character, boss, dialogue):
         messages.type_text(messages.colorize_text(f"{{BLUE}}{boss["name"]} has already been defeated.{{GREY}}"))
 
 
-def check_for_foes():
+def check_for_foes() -> bool:
     """
     Determine whether the player encounters a foe after making a move.
 
@@ -70,7 +73,7 @@ def check_for_foes():
         return False
 
 
-def guessing_game(character, dialogue):
+def guessing_game(character: dict[str, int], dialogue: dict[str, Generator[str, None, None]]) -> None:
     """
     """
     secret_number = random.randint(1, 5)
@@ -91,13 +94,13 @@ def guessing_game(character, dialogue):
             break
 
 
-def player_lose_hp(character, dialogue):
+def player_lose_hp(character: dict[str, int], dialogue: dict[str, Generator[str, None, None]]) -> None:
     character["Current HP"] -= 1
     messages.type_text(f"\033[91mYou lost one HP. \nHP left: {character["Current HP"]}\033[0m", 0.01)
     messages.type_text(next(dialogue["player_lose_hp"]))
 
 
-def input_feedback(answer, user_guess):
+def input_feedback(answer: str, user_guess: str) -> None:
     guess_feedback = ""
     for index in range(len(answer)):
         if user_guess[index] == answer[index]:
@@ -110,7 +113,8 @@ def input_feedback(answer, user_guess):
     print(messages.colorize_text(guess_feedback.upper() + "{GREY}"))
 
 
-def boss_defeated(character, boss, dialogue):
+def boss_defeated(character: dict[str, int], boss: dict[str, int | str | bool],
+                  dialogue: dict[str, Generator[str, None, None]]) -> None:
     character["Level"] += 1
     character["Current HP"] += 1 + boss["Level_required"]
     boss["alive"] = False
@@ -118,7 +122,8 @@ def boss_defeated(character, boss, dialogue):
     messages.type_text(next(dialogue["victory_cycle"]))
 
 
-def wordle(character, boss, dialogue):
+def wordle(character: dict[str, int], boss: dict[str, int | str | bool],
+           dialogue: dict[str, Generator[str, None, None]]) -> None:
     messages.type_text(next(dialogue["Hvin_intro"]))
     messages.type_text(messages.colorize_text(f"{{BLUE}}{boss["name"]} challenges you to a game of wordle!{{GREY}}"))
     answers = messages.get_text_from_txt_file("answers.txt")
@@ -136,7 +141,9 @@ def wordle(character, boss, dialogue):
     ask_retry(character, boss, wordle, dialogue)
 
 
-def ask_retry(character, boss, function, dialogue):
+def ask_retry(character: dict[str, int], boss: dict[str, int | str | bool], function: Callable[
+    [dict[str, int], dict[str, int | str | bool], dict[str, Generator[str, None, None]]], None],
+              dialogue: dict[str, Generator[str, None, None]]) -> None:
     user_input = input("Try again? (y/n): ").lower().strip()
     try:
         valid = user_input[0]
@@ -153,7 +160,7 @@ def ask_retry(character, boss, function, dialogue):
             ask_retry(character, boss, function, dialogue)
 
 
-def play_round(answer):
+def play_round(answer: str) -> bool:
     user_guess = input(f"Enter your {len(answer)}-letter guess: ").lower().strip()
     if len(user_guess) != len(answer):
         print(f"Guess must be exactly {len(answer)} letters!")
@@ -164,7 +171,8 @@ def play_round(answer):
     return False
 
 
-def anagram_game(character, boss, dialogue):
+def anagram_game(character: dict[str, int], boss: dict[str, int | str | bool],
+                 dialogue: dict[str, Generator[str, None, None]]) -> None:
     messages.type_text(next(dialogue["Amon_intro"]))
     messages.type_text(messages.colorize_text(f"{{PURPLE}}{boss["name"]} challenges you to a game of anagram!{{GREY}}"))
     answers = messages.get_text_from_txt_file("anagrams.txt")
@@ -184,7 +192,7 @@ def anagram_game(character, boss, dialogue):
     ask_retry(character, boss, anagram_game, dialogue)
 
 
-def play_dice_round():
+def play_dice_round() -> int:
     player_roll = random.randint(1, 6)
     boss_roll = random.randint(1, 6)
     roll_message = f"You rolled:{{CYAN}} {player_roll}{{GREY}} | Boss rolled:{{YELLOW}} {boss_roll}{{GREY}}"
@@ -199,7 +207,8 @@ def play_dice_round():
     return 0
 
 
-def dice_duel(character, boss, dialogue):
+def dice_duel(character: dict[str, int], boss: dict[str, int | str | bool],
+              dialogue: dict[str, Generator[str, None, None]]) -> None:
     messages.type_text(next(dialogue["Enzo_intro"]))
     messages.type_text(messages.colorize_text(f"{{YELLOW}}{boss["name"]} challenges you to a game of dice!{{GREY}}"))
     player_score, boss_score = dice_duel_rounds()
@@ -212,7 +221,7 @@ def dice_duel(character, boss, dialogue):
         ask_retry(character, boss, dice_duel, dialogue)
 
 
-def dice_duel_rounds():
+def dice_duel_rounds() -> tuple[int, int]:
     player_score = 0
     boss_score = 0
     while player_score < 2 and boss_score < 2:
