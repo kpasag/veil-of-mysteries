@@ -7,22 +7,7 @@ A01428389
 import combat
 import player
 import game_board
-import json
-
-
-def get_json():
-    with open('messages.json', 'r', encoding="utf-8") as data:
-        return json.load(data)
-
-
-def get_text_from_json(json_data, text):
-    for line in json_data[text]:
-        yield line
-
-
-def print_text_from_json(json_data, text):
-    for line in json_data[text]:
-        print(line)
+import messages
 
 
 def game():

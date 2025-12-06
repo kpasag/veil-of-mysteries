@@ -1,6 +1,6 @@
-import json
+import game
 import random
-
+from itertools import cycle
 
 def check_for_foes():
     """
