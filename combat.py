@@ -1,6 +1,6 @@
 import messages
 import random
-from itertools import cycle
+import player
 
 
 def generate_boss_positions(board):
@@ -91,7 +91,7 @@ def guessing_game(character):
 
 def player_lose_hp(character):
     character["Current HP"] -= 1
-    lose_hp_message = messages.yield_text_from_json("player_lose_hp")
+    lose_hp_message = messages.cycle_text_from_json("player_lose_hp")
     print(f"\033[91mYou lost one HP. \nHP left: {character["Current HP"]}\033[0m")
     print(next(lose_hp_message))
 
@@ -119,14 +119,40 @@ def wordle(character, boss):
     answer = random.choice(answers)
     attempt = 0
     while attempt < 6:
-        user_guess = input("Enter your guess: ").lower()
-        if user_guess == answer:
-            text = f"{{GREEN}}Correct! Your answer {answer.upper()} was correct. You have defeated Amon{{GREY}}"
-            print(messages.colorize_text(text))
+        if play_wordle_round(answer):
+            print(messages.colorize_text(f"{{GREEN}}Correct! {answer.upper()} was right!{{GREY}}"))
             boss_defeated(character, boss)
-            break
-        else:
-            wordle_feedback(answer, user_guess)
+            return
         attempt += 1
-    if attempt >= 6:
-        player_lose_hp(character)
+    player_lose_hp(character)
+    if not player.is_alive(character):
+        return
+    ask_retry_wordle(character, boss)
+
+
+def ask_retry_wordle(character, boss):
+    user_input = input("Try Wordle again? (y/n): ").lower().strip()
+    try:
+        valid = user_input[0]
+    except IndexError:
+        print("Please enter Y or N.")
+        ask_retry_wordle(character, boss)
+    else:
+        if valid == "y":
+            wordle(character, boss)
+        elif valid == "n":
+            return
+        else:
+            print("Invalid choice. Please enter Y or N.")
+            ask_retry_wordle(character, boss)
+
+
+def play_wordle_round(answer):
+    user_guess = input("Enter your 5-letter guess: ").lower().strip()
+    if len(user_guess) != 5:
+        print("Guess must be exactly 5 letters!")
+        return False
+    if user_guess == answer:
+        return True
+    wordle_feedback(answer, user_guess)
+    return False
