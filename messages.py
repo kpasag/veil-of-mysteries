@@ -6,22 +6,21 @@ def get_json():
         return json.load(data)
 
 
-def get_text_from_json(json_data, text):
+def get_text_from_json(json_data, key):
     lines = ""
-    for line in json_data[text]:
+    for line in json_data[key]:
         lines += line
     return lines
 
 
-def yield_text_from_json(json_data, text):
-    for line in json_data[text]:
+def yield_text_from_json(json_data, key):
+    for line in json_data[key]:
         yield line
 
 
-def print_text_from_json(json_data, text):
-    for line in json_data[text]:
+def print_text_from_json(json_data, key):
+    for line in json_data[key]:
         print(line)
-
 
 
 def colorize_text(text):
@@ -30,3 +29,10 @@ def colorize_text(text):
     for key, value in colours.items():
         text = text.replace(key, value)
     return text
+
+
+def get_full_text(json_data, key):
+    combined_text = ""
+    for line in json_data[key]:
+        combined_text += colorize_text(line) + "\n"
+    return combined_text.rstrip("\n")
