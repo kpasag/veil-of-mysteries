@@ -120,8 +120,10 @@ def boss_defeated(character, boss):
     character["Level"] += 1
     character["Current HP"] += 1 + boss["Level_required"]
     boss["alive"] = False
-    messages.type_text(messages.colorize_text(next(messages.cycle_text_from_json("boss_defeated"))))
-    messages.type_text(messages.colorize_text(next(messages.cycle_text_from_json("victory_cycle"))))
+    boss_defeat_dialogue = messages.cycle_text_from_json("boss_defeated")
+    victory_dialogue = messages.cycle_text_from_json("victory_cycle")
+    messages.type_text(messages.colorize_text(next(boss_defeat_dialogue)))
+    messages.type_text(messages.colorize_text(next(victory_dialogue)))
 
 
 def wordle(character, boss):
@@ -142,7 +144,7 @@ def wordle(character, boss):
 
 
 def ask_retry(character, boss, function):
-    user_input = input("Try Wordle again? (y/n): ").lower().strip()
+    user_input = input("Try again? (y/n): ").lower().strip()
     try:
         valid = user_input[0]
     except IndexError:
