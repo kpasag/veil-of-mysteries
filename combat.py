@@ -80,9 +80,9 @@ def guessing_game(character):
     """
     secret_number = random.randint(1, 5)
     while True:
-        guess = input(f'"\033[95mLet’s play a little game,\033[0m" The \033[95mman\033[0m says softly. '
-                      f'"\033[95mGuess a number from {1} to {5}.\033[0m"\n'
-                      f'Enter your choice: ')
+        messages.type_text(f'"\033[95mLet’s play a little game,\033[0m" The \033[95mman\033[0m says softly. '
+                           f'"\033[95mGuess a number from {1} to {5}.\033[0m"\n')
+        guess = input(f'Enter your choice: ')
         if not guess.isdigit():
             print("\033[95mTry again.\033[0m")
             continue
@@ -193,10 +193,10 @@ def play_dice_round():
     boss_roll = random.randint(1, 6)
     print(f"You rolled: {player_roll} | Boss rolled: {boss_roll}")
     if player_roll > boss_roll:
-        print(messages.colorize_text("{GREEN}You win the round!{GREY}"))
+        messages.type_text(messages.colorize_text("{GREEN}You win the round!{GREY}"))
         return 1
     if boss_roll > player_roll:
-        print(messages.colorize_text("{RED}You lose the round!{GREY}"))
+        messages.type_text(messages.colorize_text("{RED}You lose the round!{GREY}"))
         return -1
     print("Tie!")
     return 0
@@ -204,7 +204,7 @@ def play_dice_round():
 
 def dice_duel(character, boss):
     messages.type_text(messages.colorize_text(next(messages.cycle_text_from_json("Enzo_intro"))))
-    messages.colorize_text(f"{{YELLOW}}{boss["name"]} challenges you to dice!{{GREY}}")
+    messages.type_text(messages.colorize_text(f"{{YELLOW}}{boss["name"]} challenges you to dice!{{GREY}}"))
     player_score, boss_score = dice_duel_rounds()
     if player_score == 2:
         boss_defeated(character, boss)
