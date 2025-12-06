@@ -41,3 +41,22 @@ def make_character():
     {'X-coordinate': 0, 'Y-coordinate': 0, 'Current HP': 5}
     """
     return {"X-coordinate": 0, "Y-coordinate": 0, "Current HP": 5, "Level": 1}
+
+
+def is_alive(character):
+    """
+    Check whether the player is still alive based on their current HP.
+
+    :param character: a dictionary containing the player's current coordinate and HP
+    :precondition: character is a string
+    :postcondition: determine if the player is still alive or not based on their HP
+    :return: True if the player HP is greater than 0, False otherwise
+
+    >>> my_character = {"X-coordinate": 0, "Y-coordinate": 0, "Current HP": 5}
+    >>> is_alive(my_character)
+    True
+    >>> my_character["Current HP"] = 0
+    >>> is_alive(my_character)
+    False
+    """
+    return character["Current HP"] != 0
