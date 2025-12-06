@@ -22,13 +22,13 @@ def get_json():
 def yield_text_from_json(key):
     json_data = get_json()
     for line in json_data[key]:
-        yield line
+        yield colorize_text(line)
 
 
 def print_text_from_json(key):
     json_data = get_json()
     for line in json_data[key]:
-        print(line)
+        print(colorize_text(line))
 
 
 def colorize_text(text):
@@ -39,7 +39,8 @@ def colorize_text(text):
     return text
 
 
-def get_full_text(json_data, key):
+def get_full_text(key):
+    json_data = get_json()
     combined_text = ""
     for line in json_data[key]:
         combined_text += colorize_text(line) + "\n"
