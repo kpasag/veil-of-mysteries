@@ -21,7 +21,7 @@ def generate_bosses(board):
         "alive": True, "Level_required": 1
     }
     boss_two = {
-        "name": "Anderson, the Strongest Hunter", "X-coordinate": boss_two_pos[0], "Y-coordinate": boss_two_pos[1],
+        "name": "Hvin, Mr. Pride", "X-coordinate": boss_two_pos[0], "Y-coordinate": boss_two_pos[1],
         "alive": True, "Level_required": 2
     }
     boss_three = {
@@ -33,11 +33,18 @@ def generate_bosses(board):
 
 def fight_boss(character, boss):
     if boss["alive"] and boss["Level_required"] <= character["Level"]:
-        dice_duel(character, boss)
+        print(messages.colorize_text(f"{{RED}}You are in the presence of {boss["name"]}.{{GREY}}"))
+        if boss["name"] == "Enzo, the Winner":
+            dice_duel(character, boss)
+        elif boss["name"] == "Hvin, Mr. Pride":
+            wordle(character, boss)
+        else:
+            anagram_game(character, boss)
     elif boss["alive"]:
-        print(f"Level too low. Come back if you're level {boss["Level_required"]}")
+        print(messages.colorize_text(f"{{RED}}You are in the presence of {boss["name"]}."))
+        print(messages.colorize_text(f"Level too low. Come back if you're level {boss["Level_required"]}{{GREY}}"))
     else:
-        print("This boss has already been defeated.")
+        print(messages.colorize_text(f"{{BLUE}}{boss["name"]} has already been defeated.{{GREY}}"))
 
 
 def check_for_foes():
