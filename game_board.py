@@ -1,6 +1,7 @@
 import random
 import messages
 
+
 def make_board(rows: int, columns: int) -> dict[tuple[int, int], str]:
     """
     Create a board where each row and column pair is a coordinate that contains a randomized room description.
