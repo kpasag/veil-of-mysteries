@@ -3,7 +3,7 @@ import time
 from itertools import cycle
 
 
-def get_user_choice():
+def get_user_choice() -> str:
     """
     Prompts the player for a direction to move.
 
@@ -16,7 +16,7 @@ def get_user_choice():
     return input("Enter your choice: ").lower().strip()
 
 
-def validate_move_message(character, board, direction):
+def validate_move_message(character: dict[str, int], board: dict[tuple[int, int], str], direction: str) -> None:
     x_position, y_position = character["X-coordinate"], character["Y-coordinate"]
     max_row = max(coordinate[0] for coordinate in board.keys())
     max_col = max(coordinate[1] for coordinate in board.keys())
@@ -32,7 +32,7 @@ def validate_move_message(character, board, direction):
         print("Please try again.")
 
 
-def generate_dialogue():
+def generate_dialogue() -> dict[str, Iterator[str]]:
     return {"Enzo_intro": cycle_text_from_json("Enzo_intro"),
             "Hvin_intro": cycle_text_from_json("Hvin_intro"),
             "Amon_intro": cycle_text_from_json("Amon_intro"),
@@ -41,29 +41,29 @@ def generate_dialogue():
             "victory_cycle": cycle_text_from_json("victory_cycle")}
 
 
-def get_text_from_txt_file(file):
+def get_text_from_txt_file(file: str) -> list[str]:
     with open(file) as file_object:
         words = [line.strip() for line in file_object]
     return words
 
 
-def get_json():
+def get_json() -> dict[str, list[str]]:
     with open('messages.json', 'r', encoding="utf-8") as data:
         return json.load(data)
 
 
-def get_list_of_message_from_json(key):
+def get_list_of_message_from_json(key: str) -> list[str]:
     json_data = get_json()
     return json_data[key]
 
 
-def cycle_text_from_json(key):
+def cycle_text_from_json(key: str) -> Iterator[str]:
     json_data = get_json()
     colored_lines = [colorize_text(line) for line in json_data[key]]
     yield from cycle(colored_lines)
 
 
-def return_text_from_json(key):
+def return_text_from_json(key: str) -> str:
     json_data = get_json()
     text = ""
     for line in json_data[key]:
@@ -71,7 +71,7 @@ def return_text_from_json(key):
     return text
 
 
-def colorize_text(text):
+def colorize_text(text: str) -> str:
     colours = {"{PURPLE}": "\033[95m", "{RED}": "\033[91m", "{GREEN}": "\033[92m", "{YELLOW}": "\033[93m",
                "{BLUE}": "\033[94m", "{CYAN}": "\033[96m", "{GREY}": "\033[0m"}
     for key, value in colours.items():
@@ -79,12 +79,12 @@ def colorize_text(text):
     return text
 
 
-def get_full_text(key):
+def get_full_text(key: str) -> str:
     json_data = get_json()
     return "\n".join(colorize_text(line) for line in json_data[key])
 
 
-def type_text(text, delay=0.03):
+def type_text(text: str, delay: float = 0.03) -> None:
     for letter in text:
         print(letter, end="", flush=True)
         time.sleep(delay)
