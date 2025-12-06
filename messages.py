@@ -10,10 +10,10 @@ def get_user_choice():
     :postcondition: lower cases the players input and removes extra spaces in-between
     :return: the adjusting input as a string
     """
-    return input("Which way will you go?\n"
-                 "'\033[96mW\033[0m' to go up, '\033[96mS\033[0m' to go down,"
-                 "'\033[96mD\033[0m' to go right, or '\033[96mA\033[0m' to go left.\n"
-                 "Enter your choice: ").lower().strip()
+    type_text("\nWhich way will you go?\n"
+              "'\033[96mW\033[0m' to go up, '\033[96mS\033[0m' to go down,"
+              "'\033[96mD\033[0m' to go right, or '\033[96mA\033[0m' to go left.\n", 0.005)
+    return input("Enter your choice: ").lower().strip()
 
 
 def validate_move_message(character, board, direction):
