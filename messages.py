@@ -53,10 +53,13 @@ def cycle_text_from_json(key):
     colored_lines = [colorize_text(line) for line in json_data[key]]
     return cycle(colored_lines)
 
-def print_text_from_json(key):
+
+def return_text_from_json(key):
     json_data = get_json()
+    text = ""
     for line in json_data[key]:
-        print(colorize_text(line))
+        text += colorize_text(line)
+    return text
 
 
 def colorize_text(text):
