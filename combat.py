@@ -120,7 +120,7 @@ def wordle(character, boss):
     answer = random.choice(answers)
     attempt = 0
     while attempt < 6:
-        if play_wordle_round(answer):
+        if play_round(answer):
             print(messages.colorize_text(f"{{GREEN}}Correct! {answer.upper()} was right!{{GREY}}"))
             boss_defeated(character, boss)
             return
@@ -148,10 +148,10 @@ def ask_retry(character, boss, function):
             ask_retry(character, boss, function)
 
 
-def play_wordle_round(answer):
-    user_guess = input("Enter your 5-letter guess: ").lower().strip()
-    if len(user_guess) != 5:
-        print("Guess must be exactly 5 letters!")
+def play_round(answer):
+    user_guess = input(f"Enter your {len(answer)}-letter guess: ").lower().strip()
+    if len(user_guess) != len(answer):
+        print(f"Guess must be exactly {len(answer)} letters!")
         return False
     if user_guess == answer:
         return True
@@ -166,13 +166,13 @@ def anagram_game(character, boss):
     attempts = 0
     print(f"The letters rearrange:  {scrambled.upper()}")
     while attempts < 5:
-        guess = input("Unscramble the word: ").lower().strip()
-        if guess == answer:
-            print(messages.colorize_text(
-                f"{{GREEN}}You restored the true word: {answer.upper()}!{{GREY}}"
-            ))
+        if play_round(answer):
+            print(messages.colorize_text(f"{{GREEN}}You restored the true word: {answer.upper()}!{{GREY}}"))
             boss_defeated(character, boss)
             return
-        input_feedback(answer, guess)
         attempts += 1
     player_lose_hp(character)
+    if not player.is_alive(character):
+        return
+    ask_retry(character, boss, anagram_game)
+
