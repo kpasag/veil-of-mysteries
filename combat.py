@@ -33,7 +33,7 @@ def generate_bosses(board):
 
 def fight_boss(character, boss):
     if boss["alive"] and boss["Level_required"] <= character["Level"]:
-        wordle(character, boss)
+        dice_duel(character, boss)
     elif boss["alive"]:
         print(f"Level too low. Come back if you're level {boss["Level_required"]}")
     else:
@@ -164,7 +164,7 @@ def anagram_game(character, boss):
     answer = random.choice(answers)
     scrambled = "".join(random.sample(answer, len(answer)))
     attempts = 0
-    print(f"The letters rearrange:  {scrambled.upper()}")
+    print(f"\nThe letters rearrange:  {scrambled.upper()}")
     while attempts < 5:
         if play_round(answer):
             print(messages.colorize_text(f"{{GREEN}}You restored the true word: {answer.upper()}!{{GREY}}"))
@@ -176,3 +176,36 @@ def anagram_game(character, boss):
         return
     ask_retry(character, boss, anagram_game)
 
+
+def play_dice_round():
+    player_roll = random.randint(1, 6)
+    boss_roll = random.randint(1, 6)
+    print(f"You rolled: {player_roll} | Boss rolled: {boss_roll}")
+    if player_roll > boss_roll:
+        print(messages.colorize_text("{GREEN}You win the round!{GREY}"))
+        return 1
+    if boss_roll > player_roll:
+        print(messages.colorize_text("{RED}You lose the round!{GREY}"))
+        return -1
+    print("Tie!")
+    return 0
+
+
+def dice_duel(character, boss):
+    print(messages.colorize_text("{PURPLE}A gambler challenges you to dice!{GREY}"))
+    player_score = 0
+    boss_score = 0
+    while player_score < 2 and boss_score < 2:
+        try:
+            _ = input("Press ENTER to roll.")
+        except EOFError:
+            pass
+        result = play_dice_round()
+        if result == 1:
+            player_score += 1
+        elif result == -1:
+            boss_score += 1
+    if player_score == 2:
+        boss_defeated(character, boss)
+    else:
+        player_lose_hp(character)
