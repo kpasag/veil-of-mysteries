@@ -24,6 +24,7 @@ def game():
     board = game_board.make_board(rows, columns)
     character = player.make_character()
     bosses = combat.generate_bosses(board)
+    dialogues = messages.generate_dialogue()
     achieved_goal = False
     messages.type_text(messages.return_text_from_json("welcome_message"), 0.005)
     display_current_location(character, bosses, rows, columns)
@@ -38,16 +39,16 @@ def game():
             for boss in bosses:
                 if boss["X-coordinate"] == character["X-coordinate"] and \
                         boss["Y-coordinate"] == character["Y-coordinate"]:
-                    combat.fight_boss(character, boss)
+                    combat.fight_boss(character, boss, dialogues)
             if character["Level"] < 3:
                 there_is_a_challenger = combat.check_for_foes()
                 if there_is_a_challenger:
                     combat.guessing_game(character)
             achieved_goal = check_if_goal_attained(bosses)
     if player.is_alive(character) and achieved_goal:
-        messages.type_text(messages.return_text_from_json("win_message"), 0.01)
+        messages.type_text(messages.return_text_from_json("win_message"), 0.005)
     if not player.is_alive(character):
-        messages.type_text(messages.return_text_from_json("lost_message"), 0.01)
+        messages.type_text(messages.return_text_from_json("lost_message"), 0.005)
 
 
 def display_current_location(character, bosses, rows, columns):
