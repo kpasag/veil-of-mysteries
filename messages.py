@@ -9,8 +9,8 @@ def get_user_choice():
     :return: the adjusting input as a string
     """
     return input("Which way will you go?\n"
-                 "'\033[96mN\033[0m' for north, '\033[96mE\033[0m' for east,"
-                 "'\033[96mW\033[0m' for west, or '\033[96mS\033[0m' for south.\n"
+                 "'\033[96mW\033[0m' to go up, '\033[96mS\033[0m' to go down,"
+                 "'\033[96mD\033[0m' to go right, or '\033[96mA\033[0m' to go left.\n"
                  "Enter your choice: ").lower().strip()
 
 

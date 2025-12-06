@@ -25,10 +25,10 @@ def game():
     board = game_board.make_board(rows, columns)
     character = player.make_character()
     achieved_goal = False
-    json_text_printer("welcome_message")
+    messages.print_text_from_json("welcome_message")
     describe_current_location(board, character)
     while is_alive(character) and not achieved_goal:
-        direction = get_user_choice()
+        direction = messages.get_user_choice()
         valid_move = validate_move(board, character, direction)
         if valid_move:
             player.move_character(character, direction)
@@ -40,9 +40,9 @@ def game():
         else:
             print("Please try again.")
     if is_alive(character) and achieved_goal:
-        json_text_printer("win_message")
+        messages.print_text_from_json("win_message")
     if not is_alive(character):
-        json_text_printer("lost_message")
+        messages.print_text_from_json("lost_message")
 
 
 def describe_current_location(board, character):
@@ -95,15 +95,15 @@ def validate_move(board, character, direction):
     """
     max_row = max(coordinate[0] for coordinate in board.keys())
     max_col = max(coordinate[1] for coordinate in board.keys())
-    if direction == "n":
+    if direction == "w":
         if character["X-coordinate"] == 0:
             print("You can't go further north.")
             return False
-    elif direction == "e":
+    elif direction == "r":
         if character["Y-coordinate"] == max_col:
             print("You can't go further east.")
             return False
-    elif direction == "w":
+    elif direction == "a":
         if character["Y-coordinate"] == 0:
             print("You can't go further west.")
             return False
