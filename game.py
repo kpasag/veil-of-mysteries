@@ -86,8 +86,8 @@ def describe_current_location(board, character):
     char_y_coordinate = character["Y-coordinate"]
     location = board[(char_x_coordinate, char_y_coordinate)]
     location_message = f"Current Location: {{CYAN}}({char_x_coordinate},{char_y_coordinate}){{GREY}}"
-    messages.type_text(messages.colorize_text(location_message), 0.01)
-    messages.type_text(f"You step into the {location}.")
+    messages.type_text(messages.colorize_text(location_message), 0.007)
+    messages.type_text(f"You step into the {location}.", 0.01)
 
 
 def next_position(character, direction):
