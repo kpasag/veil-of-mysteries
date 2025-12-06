@@ -28,7 +28,7 @@ def game():
     messages.print_text_from_json("welcome_message")
     display_current_location(character, bosses, rows, columns)
     describe_current_location(board, character)
-    while is_alive(character) and not achieved_goal:
+    while player.is_alive(character) and not achieved_goal:
         direction = messages.get_user_choice()
         valid_move = validate_move(board, character, direction)
         if valid_move:
@@ -44,9 +44,9 @@ def game():
                 if there_is_a_challenger:
                     combat.guessing_game(character)
             achieved_goal = check_if_goal_attained(bosses)
-    if is_alive(character) and achieved_goal:
+    if player.is_alive(character) and achieved_goal:
         messages.print_text_from_json("win_message")
-    if not is_alive(character):
+    if not player.is_alive(character):
         messages.print_text_from_json("lost_message")
 
 
