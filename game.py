@@ -25,7 +25,7 @@ def game():
     character = player.make_character()
     bosses = combat.generate_bosses(board)
     achieved_goal = False
-    messages.type_text(messages.return_text_from_json("welcome_message"), 0.005)
+    messages.type_text(messages.return_text_from_json("welcome_message"), 0.01)
     display_current_location(character, bosses, rows, columns)
     describe_current_location(board, character)
     while player.is_alive(character) and not achieved_goal:
@@ -85,8 +85,9 @@ def describe_current_location(board, character):
     char_x_coordinate = character["X-coordinate"]
     char_y_coordinate = character["Y-coordinate"]
     location = board[(char_x_coordinate, char_y_coordinate)]
-    print(f"Current Location: \033[94m({char_x_coordinate},{char_y_coordinate})\033[0m")
-    print(f"You step into the {location}.")
+    location_message = f"Current Location: {{CYAN}}({char_x_coordinate},{char_y_coordinate}){{GREY}}"
+    messages.type_text(messages.colorize_text(location_message))
+    messages.type_text(f"You step into the {location}.")
 
 
 def next_position(character, direction):
