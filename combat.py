@@ -31,6 +31,16 @@ def generate_bosses(board):
     return boss_one, boss_two, boss_three
 
 
+def fight_boss(character, boss):
+    if boss["alive"] and boss["Level_required"] <= character["Level"]:
+        if boss["name"] == "Amon, the God of Mischief":
+            wordle()
+    elif boss["alive"]:
+        print("Level too low. Come back if you're level" + boss["Level_required"])
+    else:
+        print("This boss has already been defeated.")
+
+
 def check_for_foes():
     """
     Determine whether the player encounters a foe after making a move.
