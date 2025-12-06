@@ -1,24 +1,25 @@
 def move_character(character: dict[str, int], direction: str) -> None:
     """
-    Updates the player's position within the given direction.
+    Move the character one space in the given direction.
 
-    :param character: a dictionary containing the player's current coordinate and HP
+
+    :param character: a dictionary storing X and Y coordinates of the character
     :param direction: a lowercase string representing the movement direction
-                      ('n', 'e', 'w', or 's')
+                      ('w', 'a', 's', or 'sd)
     :precondition: character is a dictionary and direction is a string
     :postcondition: modifies the character dictionary to reflect the new coordinates
                     based on the chosen direction
 
     >>> my_character = {"X-coordinate": 2, "Y-coordinate": 2}
-    >>> move_character(my_character, "W")
-    >>> my_character["X-coordinate"]
-    1
-    >>> move_character(my_character, "D")
-    >>> my_character["Y-coordinate"]
-    3
-    >>> move_character(my_character, "s")
+    >>> move_character(my_character, "w")
     >>> my_character["X-coordinate"]
     2
+    >>> move_character(my_character, "d")
+    >>> my_character["Y-coordinate"]
+    1
+    >>> move_character(my_character, "s")
+    >>> my_character["X-coordinate"]
+    3
     """
     if direction == "w":
         character["Y-coordinate"] -= 1
@@ -32,13 +33,13 @@ def move_character(character: dict[str, int], direction: str) -> None:
 
 def make_character() -> dict[str, int]:
     """
-    Create a dictionary representing the player's position and health.
+    Create a new character with starting stats.
 
-    :postcondition: create a character with a position of (0, 0) and 5 HP
-    :return: a dictionary containing the player's position and current HP
+    :postcondition: create a character starting at (0, 0) with HP=5 and Level=1
+    :return: a dictionary containing the player's position and stats
 
     >>> make_character()
-    {'X-coordinate': 0, 'Y-coordinate': 0, 'Current HP': 5}
+    {'X-coordinate': 0, 'Y-coordinate': 0, 'Current HP': 5, 'Level': 1}
     """
     return {"X-coordinate": 0, "Y-coordinate": 0, "Current HP": 5, "Level": 1}
 
@@ -52,7 +53,7 @@ def is_alive(character: dict[str, int]) -> bool:
     :postcondition: determine if the player is still alive or not based on their HP
     :return: True if the player HP is greater than 0, False otherwise
 
-    >>> my_character = {"X-coordinate": 0, "Y-coordinate": 0, "Current HP": 5}
+    >>> my_character = {"Current HP": 5}
     >>> is_alive(my_character)
     True
     >>> my_character["Current HP"] = 0
