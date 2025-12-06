@@ -19,6 +19,11 @@ def get_json():
         return json.load(data)
 
 
+def get_list_of_message_from_json(key):
+    json_data = get_json()
+    return json_data[key]
+
+
 def yield_text_from_json(key):
     json_data = get_json()
     for line in json_data[key]:
