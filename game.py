@@ -26,12 +26,14 @@ def game():
     character = player.make_character()
     achieved_goal = False
     messages.print_text_from_json("welcome_message")
+    display_current_location(character, rows, columns)
     describe_current_location(board, character)
     while is_alive(character) and not achieved_goal:
         direction = messages.get_user_choice()
         valid_move = validate_move(board, character, direction)
         if valid_move:
             player.move_character(character, direction)
+            display_current_location(character, rows, columns)
             describe_current_location(board, character)
             there_is_a_challenger = combat.check_for_foes()
             if there_is_a_challenger:
@@ -43,6 +45,18 @@ def game():
         messages.print_text_from_json("win_message")
     if not is_alive(character):
         messages.print_text_from_json("lost_message")
+
+
+def display_current_location(character, rows, columns):
+    print("\nMap:")
+    for row in range(rows):
+        row_display = ""
+        for column in range(columns):
+            if (column, row) == (character["X-coordinate"], character["Y-coordinate"]):
+                row_display += " P"
+            else:
+                row_display += " ."
+        print(f" {row_display}")
 
 
 def describe_current_location(board, character):
