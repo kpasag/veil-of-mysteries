@@ -43,7 +43,7 @@ def game():
             if character["Level"] < 3:
                 there_is_a_challenger = combat.check_for_foes()
                 if there_is_a_challenger:
-                    combat.guessing_game(character)
+                    combat.guessing_game(character, dialogues)
             achieved_goal = check_if_goal_attained(bosses)
     if player.is_alive(character) and achieved_goal:
         messages.type_text(messages.return_text_from_json("win_message"), 0.005)
