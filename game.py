@@ -39,8 +39,6 @@ def game():
             if there_is_a_challenger:
                 combat.check_player_level(character)
             achieved_goal = check_if_goal_attained(board, character)
-        else:
-            print("Please try again.")
     if is_alive(character) and achieved_goal:
         messages.print_text_from_json("win_message")
     if not is_alive(character):
@@ -100,34 +98,29 @@ def validate_move(board, character, direction):
     >>> my_board = {(0, 0): "Room 1", (0, 1): "Room 2", (1, 0): "Room 3", (1, 1): "Room 4"}
     >>> my_character = {"X-coordinate": 0, "Y-coordinate": 0, "Current HP": 5}
     >>> validate_move(my_board, my_character, "w")
-    You can't go further north.
     False
     >>> validate_move(my_board, my_character, "5")
     False
     >>> validate_move(my_board, my_character, "s")
     True
     """
-    max_row = max(coordinate[0] for coordinate in board.keys())
-    max_col = max(coordinate[1] for coordinate in board.keys())
+    x_position, y_position = character["X-coordinate"], character["Y-coordinate"]
     if direction == "w":
-        if character["X-coordinate"] == 0:
-            print("You can't go further north.")
-            return False
-    elif direction == "d":
-        if character["Y-coordinate"] == max_col:
-            print("You can't go further east.")
-            return False
-    elif direction == "a":
-        if character["Y-coordinate"] == 0:
-            print("You can't go further west.")
-            return False
+        target = (x_position, y_position - 1)
     elif direction == "s":
-        if character["X-coordinate"] == max_row:
-            print("You can't go further south.")
-            return False
+        target = (x_position, y_position + 1)
+    elif direction == "a":
+        target = (x_position - 1, y_position)
+    elif direction == "d":
+        target = (x_position + 1, y_position)
     else:
         return False
-    return True
+    try:
+        board[target]
+    except KeyError:
+        return False
+    else:
+        return True
 
 
 def check_if_goal_attained(board, character):
