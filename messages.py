@@ -68,7 +68,7 @@ def return_text_from_json(key):
     text = ""
     for line in json_data[key]:
         text += f"{colorize_text(line)}\n"
-    return text.rstrip("\n")
+    return text
 
 
 def colorize_text(text):
