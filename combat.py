@@ -31,15 +31,15 @@ def generate_bosses(board):
     return boss_one, boss_two, boss_three
 
 
-def fight_boss(character, boss):
+def fight_boss(character, boss, dialogue):
     if boss["alive"] and boss["Level_required"] <= character["Level"]:
         messages.type_text(messages.colorize_text(f"{{RED}}You are in the presence of {boss["name"]}.{{GREY}}"))
         if boss["name"] == "Enzo, the Winner":
-            dice_duel(character, boss)
+            dice_duel(character, boss, dialogue)
         elif boss["name"] == "Hvin, Mr. Pride":
-            wordle(character, boss)
+            wordle(character, boss, dialogue)
         else:
-            anagram_game(character, boss)
+            anagram_game(character, boss, dialogue)
     elif boss["alive"]:
         messages.type_text(messages.colorize_text(f"{{RED}}You are in the presence of {boss["name"]}."))
         level = messages.colorize_text(f"Level too low. Come back if you're level {boss["Level_required"]}{{GREY}}")
@@ -70,14 +70,8 @@ def check_for_foes():
         return False
 
 
-def guessing_game(character):
+def guessing_game(character, dialogue):
     """
-    Play a number guessing game from the number 1 to 5.
-
-    :param character: a dictionary containing the player's current coordinate and HP
-    :precondition: character is a string
-    :postcondition: reduces the player's HP by 1 if the answer is incorrect and prints
-                    an ambience string based on remaining HP
     """
     secret_number = random.randint(1, 5)
     while True:
@@ -90,18 +84,17 @@ def guessing_game(character):
         guess = int(guess)
         if guess < secret_number or guess > secret_number:
             messages.type_text(f'\033[95mHe\033[0m smiles faintly. "\033[95mClose. the number was {secret_number}."')
-            player_lose_hp(character)
+            player_lose_hp(character, dialogue)
             break
         else:
             messages.type_text('"\033[92mCorrect... You truly are interesting,\033[0m" The \033[95mman\033[0m says.')
             break
 
 
-def player_lose_hp(character):
+def player_lose_hp(character, dialogue):
     character["Current HP"] -= 1
-    lose_hp_message = messages.cycle_text_from_json("player_lose_hp")
     messages.type_text(f"\033[91mYou lost one HP. \nHP left: {character["Current HP"]}\033[0m", 0.01)
-    messages.type_text(next(lose_hp_message))
+    messages.type_text(next(dialogue["player_lose_hp"]))
 
 
 def input_feedback(answer, user_guess):
@@ -117,48 +110,47 @@ def input_feedback(answer, user_guess):
     print(messages.colorize_text(guess_feedback.upper() + "{GREY}"))
 
 
-def boss_defeated(character, boss):
+def boss_defeated(character, boss, dialogue):
     character["Level"] += 1
     character["Current HP"] += 1 + boss["Level_required"]
     boss["alive"] = False
-    boss_defeat_dialogue = messages.cycle_text_from_json("boss_defeated")
-    victory_dialogue = messages.cycle_text_from_json("victory_cycle")
-    messages.type_text(messages.colorize_text(next(boss_defeat_dialogue)))
-    messages.type_text(messages.colorize_text(next(victory_dialogue)))
+    messages.type_text(next(dialogue["boss_defeated"]))
+    messages.type_text(next(dialogue["victory_cycle"]))
 
 
-def wordle(character, boss):
-    messages.type_text(messages.colorize_text(next(messages.cycle_text_from_json("Hvin_intro"))))
+def wordle(character, boss, dialogue):
+    messages.type_text(next(dialogue["Hvin_intro"]))
+    messages.type_text(messages.colorize_text(f"{{BLUE}}{boss["name"]} challenges you to a game of wordle!{{GREY}}"))
     answers = messages.get_text_from_txt_file("answers.txt")
     answer = random.choice(answers)
     attempt = 0
     while attempt < 6:
         if play_round(answer):
             print(messages.colorize_text(f"{{GREEN}}Correct! {answer.upper()} was right!{{GREY}}"))
-            boss_defeated(character, boss)
+            boss_defeated(character, boss, dialogue)
             return
         attempt += 1
-    player_lose_hp(character)
+    player_lose_hp(character, dialogue)
     if not player.is_alive(character):
         return
-    ask_retry(character, boss, wordle)
+    ask_retry(character, boss, wordle, dialogue)
 
 
-def ask_retry(character, boss, function):
+def ask_retry(character, boss, function, dialogue):
     user_input = input("Try again? (y/n): ").lower().strip()
     try:
         valid = user_input[0]
     except IndexError:
         messages.type_text("Please enter Y or N.")
-        ask_retry(character, boss, function)
+        ask_retry(character, boss, function, dialogue)
     else:
         if valid == "y":
-            function(character, boss)
+            function(character, boss, dialogue)
         elif valid == "n":
             return
         else:
             print("Invalid choice. Please enter Y or N.")
-            ask_retry(character, boss, function)
+            ask_retry(character, boss, function, dialogue)
 
 
 def play_round(answer):
@@ -172,8 +164,9 @@ def play_round(answer):
     return False
 
 
-def anagram_game(character, boss):
-    messages.type_text(messages.colorize_text(next(messages.cycle_text_from_json("Amon_intro"))))
+def anagram_game(character, boss, dialogue):
+    messages.type_text(next(dialogue["Amon_intro"]))
+    messages.type_text(messages.colorize_text(f"{{PURPLE}}{boss["name"]} challenges you to a game of anagram!{{GREY}}"))
     answers = messages.get_text_from_txt_file("anagrams.txt")
     answer = random.choice(answers)
     scrambled = "".join(random.sample(answer, len(answer)))
@@ -182,19 +175,20 @@ def anagram_game(character, boss):
     while attempts < 5:
         if play_round(answer):
             print(messages.colorize_text(f"{{GREEN}}You restored the true word: {answer.upper()}!{{GREY}}"))
-            boss_defeated(character, boss)
+            boss_defeated(character, boss, dialogue)
             return
         attempts += 1
-    player_lose_hp(character)
+    player_lose_hp(character, dialogue)
     if not player.is_alive(character):
         return
-    ask_retry(character, boss, anagram_game)
+    ask_retry(character, boss, anagram_game, dialogue)
 
 
 def play_dice_round():
     player_roll = random.randint(1, 6)
     boss_roll = random.randint(1, 6)
-    print(f"You rolled: {player_roll} | Boss rolled: {boss_roll}")
+    roll_message = f"You rolled:{{CYAN}} {player_roll}{{GREY}} | Boss rolled:{{YELLOW}} {boss_roll}{{GREY}}"
+    print(messages.colorize_text(roll_message))
     if player_roll > boss_roll:
         messages.type_text(messages.colorize_text("{GREEN}You win the round!{GREY}"))
         return 1
@@ -205,17 +199,17 @@ def play_dice_round():
     return 0
 
 
-def dice_duel(character, boss):
-    messages.type_text(messages.colorize_text(next(messages.cycle_text_from_json("Enzo_intro"))))
-    messages.type_text(messages.colorize_text(f"{{YELLOW}}{boss["name"]} challenges you to dice!{{GREY}}"))
+def dice_duel(character, boss, dialogue):
+    messages.type_text(next(dialogue["Enzo_intro"]))
+    messages.type_text(messages.colorize_text(f"{{YELLOW}}{boss["name"]} challenges you to a game of dice!{{GREY}}"))
     player_score, boss_score = dice_duel_rounds()
     if player_score == 2:
-        boss_defeated(character, boss)
+        boss_defeated(character, boss, dialogue)
     else:
-        player_lose_hp(character)
+        player_lose_hp(character, dialogue)
         if not player.is_alive(character):
             return
-        ask_retry(character, boss, dice_duel)
+        ask_retry(character, boss, dice_duel, dialogue)
 
 
 def dice_duel_rounds():
