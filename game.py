@@ -10,7 +10,7 @@ import game_board
 import messages
 
 
-def game():
+def game() -> None:
     """
     Initializes the game board and the player character, then continuously processes
     player input for movement until the game ends.
@@ -51,7 +51,7 @@ def game():
         messages.type_text(messages.return_text_from_json("lost_message"), 0.005)
 
 
-def display_current_location(character, bosses, rows, columns):
+def display_current_location(character: dict[str, int], bosses: List[Dict[str, int]], rows: int, columns: int) -> None:
     print("\nMap:")
     for row in range(rows):
         row_display = ""
@@ -68,7 +68,7 @@ def display_current_location(character, bosses, rows, columns):
         messages.type_text(f" {row_display}", 0.001)
 
 
-def describe_current_location(board, character):
+def describe_current_location(board: dict[tuple[int, int], str], character: Dict[str, int]) -> None:
     """
     Display the current location of the player and the room description of the coordinates they're in.
 
@@ -93,7 +93,7 @@ def describe_current_location(board, character):
     messages.type_text(f"You step into the {location}.", 0.01)
 
 
-def next_position(character, direction):
+def next_position(character: dict[str, int], direction: str) -> tuple[int, int] | None:
     x_position, y_position = character["X-coordinate"], character["Y-coordinate"]
     if direction == "w":
         return x_position, y_position - 1
@@ -107,7 +107,7 @@ def next_position(character, direction):
         return None
 
 
-def validate_move(board, character, direction):
+def validate_move(board: dict[tuple[int, int], str], character: Dict[str, int], direction: str) -> bool:
     """
     Check whether the player's input for movement is valid.
 
@@ -141,7 +141,7 @@ def validate_move(board, character, direction):
         return True
 
 
-def check_if_goal_attained(bosses):
+def check_if_goal_attained(bosses: list[dict[str, int]]) -> bool:
     """
     """
     for boss in bosses:
@@ -150,7 +150,7 @@ def check_if_goal_attained(bosses):
     return True
 
 
-def main():
+def main() -> None:
     """
     Drive the program.
     """
