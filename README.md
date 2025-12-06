@@ -1,25 +1,46 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/S4csochw)
+# TINGEN’S VEIL
 
-# COMP-1510-202530-LAB-07
+*A Lord of the Mysteries–Themed Text RPG*
 
-Every program needs a README.md
+---
 
-This is written in markdown.
+## Developer Info
 
-Read about markdown here: [markdowncheatsheet](https://www.markdownguide.org/cheat-sheet/)
+**Name:** Kyle Pasag  
+**Student Number:** A01428389  
+**Course:** COMP 1510 — Programming Methods  
+**Term Project**
 
-## YOUR NAME:
+---
 
-Kyle Pasag
+## Game Description
 
-## YOUR STUDENT NUMBER:
+You awaken within a mysterious 10×10 maze swallowed by gray fog.  
+Your only chance of escape is to defeat three supernatural adversaries — each testing your mind in different ways.
 
-A01428389
+Progress through the labyrinth, uncover eerie rooms, and survive strange encounters.  
+Reach Level 3. Defeat the final Beyonder. Escape the fog.
 
-## YOUR GITHUB NAME:
+Can you keep your sanity?
 
-kpasag
+---
 
-## HOW DID THE LAB GO:
+## Setup & Execution Instructions
 
-Lab went well
+### Requirements
+
+- Python 3.13+ installed
+- The following project files must remain in the same folder:
+    - `game.py` (main program)
+    - `combat.py`
+    - `player.py`
+    - `messages.py`
+    - `game_board.py`
+    - `messages.json` and other data files (e.g., `answers.txt`, `anagrams.txt`)
+
+### Running the Game
+
+Open a terminal in the project folder and run:
+
+```bash
+python game.py
