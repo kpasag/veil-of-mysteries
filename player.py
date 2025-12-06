@@ -10,23 +10,23 @@ def move_character(character, direction):
                     based on the chosen direction
 
     >>> my_character = {"X-coordinate": 2, "Y-coordinate": 2}
-    >>> move_character(my_character, "n")
+    >>> move_character(my_character, "W")
     >>> my_character["X-coordinate"]
     1
-    >>> move_character(my_character, "e")
+    >>> move_character(my_character, "D")
     >>> my_character["Y-coordinate"]
     3
     >>> move_character(my_character, "s")
     >>> my_character["X-coordinate"]
     2
     """
-    if direction == "n":
-        character["X-coordinate"] -= 1
-    elif direction == "e":
-        character["Y-coordinate"] += 1
-    elif direction == "w":
+    if direction == "w":
         character["Y-coordinate"] -= 1
-    else:
+    elif direction == "s":
+        character["Y-coordinate"] += 1
+    elif direction == "a":
+        character["X-coordinate"] -= 1
+    elif direction == "d":
         character["X-coordinate"] += 1
 
 

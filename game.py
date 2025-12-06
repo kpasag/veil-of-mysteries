@@ -91,20 +91,20 @@ def validate_move(board, character, direction):
                   that represent a coordinate and the value is the room description
     :param character: a dictionary containing the player's current coordinate and HP
     :param direction: a lowercase string representing the movement direction
-                      ('n', 'e', 'w', or 's')
+                      ('w', 'd', 'a', or 's')
     :precondition: board is a dictionary, character is a dictionary, and direction is a string
     :postcondition: checks if the direction is within the boundaries of the board and if it
-                    is one of the four valid directions ('n', 'e', 'w', or 's')
+                    is one of the four valid directions ('w', 'd', 'a', or 's')
     :return: True if the direction given is valid, False otherwise
 
     >>> my_board = {(0, 0): "Room 1", (0, 1): "Room 2", (1, 0): "Room 3", (1, 1): "Room 4"}
     >>> my_character = {"X-coordinate": 0, "Y-coordinate": 0, "Current HP": 5}
-    >>> validate_move(my_board, my_character, "n")
+    >>> validate_move(my_board, my_character, "w")
     You can't go further north.
     False
     >>> validate_move(my_board, my_character, "5")
     False
-    >>> validate_move(my_board, my_character, "e")
+    >>> validate_move(my_board, my_character, "s")
     True
     """
     max_row = max(coordinate[0] for coordinate in board.keys())
@@ -113,7 +113,7 @@ def validate_move(board, character, direction):
         if character["X-coordinate"] == 0:
             print("You can't go further north.")
             return False
-    elif direction == "r":
+    elif direction == "d":
         if character["Y-coordinate"] == max_col:
             print("You can't go further east.")
             return False
