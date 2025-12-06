@@ -13,8 +13,7 @@ def make_board(rows, columns):
     :return: a dictionary representing the complete game board
     """
     rooms = messages.get_list_of_message_from_json("rooms")
-    board = {}
-    for row in range(rows):
-        for column in range(columns):
-            board[row, column] = random.choice(rooms)
+    board = {(row, column): random.choice(rooms)
+             for row in range(rows)
+             for column in range(columns)}
     return board
