@@ -80,5 +80,35 @@
     "Runed Gate — symbols flash as you look away.",
     "Obsidian Bridge — steps shimmer like liquid silver.",
     "Hall of the Monocled Gentleman — someone watches from the glass."
+  ],
+  "boss_defeated": [
+    "{GREEN}\"Hah. Fortune bends in your favor today.\nBut luck is a coin that never stops flipping — and one day, it lands on its edge.\"{GREY}",
+    "{GREEN}\"You impose order on the chaos of letters... impressive.\nThe fog loosens its hold on you — but do not assume clarity lasts forever.\"{GREY}",
+    ",{GREEN}Amon pauses, monocle catching the faintest glow.{GREY} {GREEN}\"So you reach your ending...\nor your beginning.\nAscend — if you believe your mind can bear the truth.\"{GREY}"
+  ],
+  "victory_cycle": [
+    "{GREEN}Power settles into your veins… stronger than before.{GREY}",
+    "{GREEN}The fog recoils from your presence.{GREY}",
+    "{GREEN}You feel your mind sharpen, reality bending just slightly in your favor.{GREY}",
+    "{GREEN}Your path grows clearer… the maze fears your progress.{GREY}",
+    "{GREEN}The shadows whisper your name differently now.{GREY}"
+  ],
+  "Hvin_intro": [
+    "{BLUE}The air ripples.\nLetters twist into shapes that stare back at you.{GREY}\n",
+    "{BLUE}\"Meaning is a blade. Can yours cut true?\"{GREY}\n",
+    "{BLUE}Ink rises from the floor, forming a figure.\nA whisper follows: \"Spell wisely…\"{GREY}\n",
+    "{BLUE}\"One wrong word… and the world forgets you.\"{GREY}\n"
+  ],
+  "Enzo_intro": [
+    "{YELLOW}A lone lantern flickers.\nCards shuffle themselves in the dark.{GREY}\n",
+    "{YELLOW}\"Fortune listens… show her your hand.\"{GREY}\n",
+    "{YELLOW}Dice clatter across the floor.\n\"Care to test your destiny?\"{GREY}\n",
+    "{YELLOW}\"A single roll can change everything.\"{GREY}\n"
+  ],
+  "Amon_intro": [
+    "{PURPLE}A tall man steps from the fog.\nHe adjusts his monocle — calculating.{GREY}\n",
+    "{PURPLE}\"Let us see if your wit survives chaos.\"{GREY}\n",
+    "{PURPLE}Symbols rearrange in the air.\n\"Find the hidden order… if you can.\"{GREY}\n",
+    "{PURPLE}\"You stand at the edge of truth.\nShow me you deserve to leap.\"{GREY}\n"
   ]
 }
