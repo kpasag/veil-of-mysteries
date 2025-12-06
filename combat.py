@@ -192,20 +192,28 @@ def play_dice_round():
 
 
 def dice_duel(character, boss):
-    print(messages.colorize_text("{PURPLE}A gambler challenges you to dice!{GREY}"))
+    print(messages.colorize_text(f"{{YELLOW}}{boss["name"]} challenges you to dice!{{GREY}}"))
+    player_score, boss_score = dice_duel_rounds()
+    if player_score == 2:
+        boss_defeated(character, boss)
+    else:
+        player_lose_hp(character)
+        if not player.is_alive(character):
+            return
+        ask_retry(character, boss, dice_duel)
+
+
+def dice_duel_rounds():
     player_score = 0
     boss_score = 0
     while player_score < 2 and boss_score < 2:
         try:
-            _ = input("Press ENTER to roll.")
+            input("Press ENTER to roll.")
         except EOFError:
-            pass
+            print("Input failed, auto-rolling.")
         result = play_dice_round()
         if result == 1:
             player_score += 1
         elif result == -1:
             boss_score += 1
-    if player_score == 2:
-        boss_defeated(character, boss)
-    else:
-        player_lose_hp(character)
+    return player_score, boss_score
