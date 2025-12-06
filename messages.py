@@ -1,6 +1,7 @@
 import json
 import time
 from itertools import cycle
+from typing import Generator
 
 
 def get_user_choice() -> str:
@@ -32,7 +33,7 @@ def validate_move_message(character: dict[str, int], board: dict[tuple[int, int]
         print("Please try again.")
 
 
-def generate_dialogue() -> dict[str, Iterator[str]]:
+def generate_dialogue() -> dict[str, Generator[str, None, None]]:
     return {"Enzo_intro": cycle_text_from_json("Enzo_intro"),
             "Hvin_intro": cycle_text_from_json("Hvin_intro"),
             "Amon_intro": cycle_text_from_json("Amon_intro"),
@@ -57,7 +58,7 @@ def get_list_of_message_from_json(key: str) -> list[str]:
     return json_data[key]
 
 
-def cycle_text_from_json(key: str) -> Iterator[str]:
+def cycle_text_from_json(key: str) -> Generator[str, None, None]:
     json_data = get_json()
     colored_lines = [colorize_text(line) for line in json_data[key]]
     yield from cycle(colored_lines)
