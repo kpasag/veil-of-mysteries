@@ -10,11 +10,19 @@ import game_board
 import json
 
 
-def json_text_printer(text):
+def get_json():
     with open('messages.json', 'r', encoding="utf-8") as data:
-        data_object = json.load(data)
-        for line in data_object[text]:
-            print(line)
+        return json.load(data)
+
+
+def get_text_from_json(json_data, text):
+    for line in json_data[text]:
+        yield line
+
+
+def print_text_from_json(json_data, text):
+    for line in json_data[text]:
+        print(line)
 
 
 def game():

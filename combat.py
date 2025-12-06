@@ -59,14 +59,6 @@ def guessing_game(character):
             print('"\033[92mCorrect... You truly are interesting,\033[0m" The \033[95mman\033[0m says.')
             break
 
-# Make this reusable
-def get_player_lose_hp_message(text):
-    with open("messages.json", "r", encoding="utf-8") as data:
-        data_object = json.load(data)
-        yield from map(lambda text_line: text_line.replace("{PURPLE}", "\033[95m"), data_object)
-
-
-
 
 def player_lose_hp(character):
     character["Current HP"] -= 1
