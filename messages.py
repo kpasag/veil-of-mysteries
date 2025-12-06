@@ -14,6 +14,22 @@ def get_user_choice():
                  "Enter your choice: ").lower().strip()
 
 
+def validate_move_message(character, board, direction):
+    x_position, y_position = character["X-coordinate"], character["Y-coordinate"]
+    max_row = max(coordinate[0] for coordinate in board.keys())
+    max_col = max(coordinate[1] for coordinate in board.keys())
+    if direction == "w" and y_position == 0:
+        print("You can't go further north.")
+    elif direction == "s" and y_position == max_col:
+        print("You can't go further east.")
+    elif direction == "a" and x_position == 0:
+        print("You can't go further west.")
+    elif direction == "d" and x_position == max_row:
+        print("You can't go further south.")
+    else:
+        print("Please try again.")
+
+
 def get_json():
     with open('messages.json', 'r', encoding="utf-8") as data:
         return json.load(data)
