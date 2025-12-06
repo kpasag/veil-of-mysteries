@@ -51,7 +51,8 @@ def game() -> None:
         messages.type_text(messages.return_text_from_json("lost_message"), 0.005)
 
 
-def display_current_location(character: dict[str, int], bosses: List[Dict[str, int]], rows: int, columns: int) -> None:
+def display_current_location(character: dict[str, int], bosses: tuple[dict[str, int | str | bool], ...], rows: int,
+                             columns: int) -> None:
     print("\nMap:")
     for row in range(rows):
         row_display = ""
@@ -68,7 +69,7 @@ def display_current_location(character: dict[str, int], bosses: List[Dict[str, i
         messages.type_text(f" {row_display}", 0.001)
 
 
-def describe_current_location(board: dict[tuple[int, int], str], character: Dict[str, int]) -> None:
+def describe_current_location(board: dict[tuple[int, int], str], character: dict[str, int]) -> None:
     """
     Display the current location of the player and the room description of the coordinates they're in.
 
@@ -107,7 +108,7 @@ def next_position(character: dict[str, int], direction: str) -> tuple[int, int] 
         return None
 
 
-def validate_move(board: dict[tuple[int, int], str], character: Dict[str, int], direction: str) -> bool:
+def validate_move(board: dict[tuple[int, int], str], character: dict[str, int], direction: str) -> bool:
     """
     Check whether the player's input for movement is valid.
 
