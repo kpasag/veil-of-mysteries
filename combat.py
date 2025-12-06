@@ -2,8 +2,30 @@ import messages
 import random
 from itertools import cycle
 
-def generate_bosses(board):
+
+def generate_boss_positions(board):
     possible_positions = list(board.keys())
+    possible_positions.remove((0, 0))
+    boss_one_pos = random.choice(possible_positions)
+    possible_positions.remove(boss_one_pos)
+    boss_two_pos = random.choice(possible_positions)
+    possible_positions.remove(boss_two_pos)
+    boss_three_pos = random.choice(possible_positions)
+    return boss_one_pos, boss_two_pos, boss_three_pos
+
+
+def generate_bosses(board):
+    boss_one_pos, boss_two_pos, boss_three_pos = generate_boss_positions(board)
+    boss_one = {
+        "name": "Enzo, the Winner", "X-coordinate": boss_one_pos[0], "Y-coordinate": boss_one_pos[1],
+    }
+    boss_two = {
+        "name": "Anderson, the Strongest Hunter", "X-coordinate": boss_two_pos[0], "Y-coordinate": boss_two_pos[1],
+    }
+    boss_three = {
+        "name": "Amon, the God of Mischief", "X-coordinate": boss_three_pos[0], "Y-coordinate": boss_three_pos[1],
+    }
+    return boss_one, boss_two, boss_three
 
 
 def check_for_foes():
@@ -32,7 +54,7 @@ def check_player_level(character):
     if character["Level"] <= 1:
         guessing_game(character)
     elif character["Level"] <= 2:
-        wordle(character)
+        wordle()
     elif character["Level"] <= 3:
         pass
 
