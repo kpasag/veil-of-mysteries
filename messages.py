@@ -32,7 +32,7 @@ def validate_move_message(character, board, direction):
 
 def get_text_from_txt_file(file):
     with open(file) as file_object:
-        words = [line.strip() for line in file]
+        words = [line.strip() for line in file_object]
     return words
 
 
