@@ -25,7 +25,7 @@ def game():
     character = player.make_character()
     bosses = combat.generate_bosses(board)
     achieved_goal = False
-    messages.print_text_from_json("welcome_message")
+    messages.type_text(messages.return_text_from_json("welcome_message"), 0.005)
     display_current_location(character, bosses, rows, columns)
     describe_current_location(board, character)
     while player.is_alive(character) and not achieved_goal:
