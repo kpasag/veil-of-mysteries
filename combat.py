@@ -96,9 +96,9 @@ def player_lose_hp(character):
     print(next(lose_hp_message))
 
 
-def wordle_feedback(answer, user_guess):
+def input_feedback(answer, user_guess):
     guess_feedback = ""
-    for index in range(5):
+    for index in range(len(answer)):
         if user_guess[index] == answer[index]:
             guess_feedback += "{GREEN}" + user_guess[index]
         else:
@@ -111,6 +111,7 @@ def wordle_feedback(answer, user_guess):
 
 def boss_defeated(character, boss):
     character["Level"] += 1
+    character["Current HP"] += 1 + boss["Level_required"]
     boss["alive"] = False
 
 
@@ -154,5 +155,24 @@ def play_wordle_round(answer):
         return False
     if user_guess == answer:
         return True
-    wordle_feedback(answer, user_guess)
+    input_feedback(answer, user_guess)
     return False
+
+
+def anagram_game(character, boss):
+    answers = messages.get_text_from_txt_file("anagrams.txt")
+    answer = random.choice(answers)
+    scrambled = "".join(random.sample(answer, len(answer)))
+    attempts = 0
+    print(f"The letters rearrange:  {scrambled.upper()}")
+    while attempts < 5:
+        guess = input("Unscramble the word: ").lower().strip()
+        if guess == answer:
+            print(messages.colorize_text(
+                f"{{GREEN}}You restored the true word: {answer.upper()}!{{GREY}}"
+            ))
+            boss_defeated(character, boss)
+            return
+        input_feedback(answer, guess)
+        attempts += 1
+    player_lose_hp(character)
