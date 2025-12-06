@@ -39,7 +39,7 @@ def game():
                 if boss["X-coordinate"] == character["X-coordinate"] and \
                         boss["Y-coordinate"] == character["Y-coordinate"]:
                     combat.fight_boss(character, boss)
-            if character["Level"] == 1:
+            if character["Level"] < 3:
                 there_is_a_challenger = combat.check_for_foes()
                 if there_is_a_challenger:
                     combat.guessing_game(character)
