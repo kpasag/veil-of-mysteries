@@ -58,11 +58,13 @@ def display_current_location(character, bosses, rows, columns):
         for column in range(columns):
             if (column, row) == (character["X-coordinate"], character["Y-coordinate"]):
                 row_display += " P"
-            elif any(boss["alive"] and boss["X-coordinate"] == column
-                     and boss["Y-coordinate"] == row for boss in bosses):
-                row_display += " B"
             else:
-                row_display += " ."
+                icon = " ."
+                for boss in bosses:
+                    if boss["alive"] and boss["X-coordinate"] == column and boss["Y-coordinate"] == row:
+                        icon = " ?" if boss["Level_required"] > character["Level"] else " B"
+                        break
+                row_display += icon
         messages.type_text(f" {row_display}", 0.001)
 
 
