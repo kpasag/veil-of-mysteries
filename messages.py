@@ -19,19 +19,14 @@ def get_json():
         return json.load(data)
 
 
-def get_text_from_json(json_data, key):
-    lines = ""
-    for line in json_data[key]:
-        lines += line
-    return lines
-
-
-def yield_text_from_json(json_data, key):
+def yield_text_from_json(key):
+    json_data = get_json()
     for line in json_data[key]:
         yield line
 
 
-def print_text_from_json(json_data, key):
+def print_text_from_json(key):
+    json_data = get_json()
     for line in json_data[key]:
         print(line)
 
