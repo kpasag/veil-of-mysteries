@@ -33,7 +33,7 @@ def generate_bosses(board):
 
 def fight_boss(character, boss):
     if boss["alive"] and boss["Level_required"] <= character["Level"]:
-        print(messages.colorize_text(f"{{RED}}You are in the presence of {boss["name"]}.{{GREY}}"))
+        messages.type_text(messages.colorize_text(f"{{RED}}You are in the presence of {boss["name"]}.{{GREY}}"))
         if boss["name"] == "Enzo, the Winner":
             dice_duel(character, boss)
         elif boss["name"] == "Hvin, Mr. Pride":
@@ -41,10 +41,11 @@ def fight_boss(character, boss):
         else:
             anagram_game(character, boss)
     elif boss["alive"]:
-        print(messages.colorize_text(f"{{RED}}You are in the presence of {boss["name"]}."))
-        print(messages.colorize_text(f"Level too low. Come back if you're level {boss["Level_required"]}{{GREY}}"))
+        messages.type_text(messages.colorize_text(f"{{RED}}You are in the presence of {boss["name"]}."))
+        level = messages.colorize_text(f"Level too low. Come back if you're level {boss["Level_required"]}{{GREY}}")
+        messages.type_text(level)
     else:
-        print(messages.colorize_text(f"{{BLUE}}{boss["name"]} has already been defeated.{{GREY}}"))
+        messages.type_text(messages.colorize_text(f"{{BLUE}}{boss["name"]} has already been defeated.{{GREY}}"))
 
 
 def check_for_foes():
@@ -57,8 +58,8 @@ def check_for_foes():
     """
     roll = random.randint(1, 10)
     if roll == 10:
-        print("\033[93mTime freezes. A \033[95mman\033[93m appears from the darkness, "
-              "adjusts his\033[95m monocle\033[93m and smiles at you.\033[0m")
+        messages.type_text("\033[93mTime freezes. A \033[95mman\033[93m appears from the darkness, "
+                           "adjusts his\033[95m monocle\033[93m and smiles at you.\033[0m")
         return True
     else:
         backgrounds = []
@@ -88,19 +89,19 @@ def guessing_game(character):
             continue
         guess = int(guess)
         if guess < secret_number or guess > secret_number:
-            print(f'\033[95mHe\033[0m smiles faintly. "\033[95mClose. the number was {secret_number}."')
+            messages.type_text(f'\033[95mHe\033[0m smiles faintly. "\033[95mClose. the number was {secret_number}."')
             player_lose_hp(character)
             break
         else:
-            print('"\033[92mCorrect... You truly are interesting,\033[0m" The \033[95mman\033[0m says.')
+            messages.type_text('"\033[92mCorrect... You truly are interesting,\033[0m" The \033[95mman\033[0m says.')
             break
 
 
 def player_lose_hp(character):
     character["Current HP"] -= 1
     lose_hp_message = messages.cycle_text_from_json("player_lose_hp")
-    print(f"\033[91mYou lost one HP. \nHP left: {character["Current HP"]}\033[0m")
-    print(next(lose_hp_message))
+    messages.type_text(f"\033[91mYou lost one HP. \nHP left: {character["Current HP"]}\033[0m", 0.01)
+    messages.type_text(next(lose_hp_message))
 
 
 def input_feedback(answer, user_guess):
@@ -148,7 +149,7 @@ def ask_retry(character, boss, function):
     try:
         valid = user_input[0]
     except IndexError:
-        print("Please enter Y or N.")
+        messages.type_text("Please enter Y or N.")
         ask_retry(character, boss, function)
     else:
         if valid == "y":
@@ -200,7 +201,7 @@ def play_dice_round():
     if boss_roll > player_roll:
         messages.type_text(messages.colorize_text("{RED}You lose the round!{GREY}"))
         return -1
-    print("Tie!")
+    messages.type_text("Tie!")
     return 0
 
 
