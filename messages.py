@@ -1,6 +1,19 @@
 import json
 
 
+def get_user_choice():
+    """
+    Prompts the player for a direction to move.
+
+    :postcondition: lower cases the players input and removes extra spaces in-between
+    :return: the adjusting input as a string
+    """
+    return input("Which way will you go?\n"
+                 "'\033[96mN\033[0m' for north, '\033[96mE\033[0m' for east,"
+                 "'\033[96mW\033[0m' for west, or '\033[96mS\033[0m' for south.\n"
+                 "Enter your choice: ").lower().strip()
+
+
 def get_json():
     with open('messages.json', 'r', encoding="utf-8") as data:
         return json.load(data)
