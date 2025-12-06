@@ -89,6 +89,20 @@ def describe_current_location(board, character):
     print(f"You step into the {location}.")
 
 
+def next_position(character, direction):
+    x_position, y_position = character["X-coordinate"], character["Y-coordinate"]
+    if direction == "w":
+        return x_position, y_position - 1
+    elif direction == "s":
+        return x_position, y_position + 1
+    elif direction == "a":
+        return x_position - 1, y_position
+    elif direction == "d":
+        return x_position + 1, y_position
+    else:
+        return None
+
+
 def validate_move(board, character, direction):
     """
     Check whether the player's input for movement is valid.
@@ -112,16 +126,8 @@ def validate_move(board, character, direction):
     >>> validate_move(my_board, my_character, "s")
     True
     """
-    x_position, y_position = character["X-coordinate"], character["Y-coordinate"]
-    if direction == "w":
-        target = (x_position, y_position - 1)
-    elif direction == "s":
-        target = (x_position, y_position + 1)
-    elif direction == "a":
-        target = (x_position - 1, y_position)
-    elif direction == "d":
-        target = (x_position + 1, y_position)
-    else:
+    target = next_position(character, direction)
+    if not target:
         return False
     try:
         board[target]
