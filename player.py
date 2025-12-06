@@ -1,4 +1,4 @@
-def move_character(character, direction):
+def move_character(character: dict[str, int], direction: str) -> None:
     """
     Updates the player's position within the given direction.
 
@@ -30,7 +30,7 @@ def move_character(character, direction):
         character["X-coordinate"] += 1
 
 
-def make_character():
+def make_character() -> dict[str, int]:
     """
     Create a dictionary representing the player's position and health.
 
@@ -43,7 +43,7 @@ def make_character():
     return {"X-coordinate": 0, "Y-coordinate": 0, "Current HP": 5, "Level": 1}
 
 
-def is_alive(character):
+def is_alive(character: dict[str, int]) -> bool:
     """
     Check whether the player is still alive based on their current HP.
 
