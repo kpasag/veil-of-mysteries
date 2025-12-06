@@ -33,10 +33,9 @@ def generate_bosses(board):
 
 def fight_boss(character, boss):
     if boss["alive"] and boss["Level_required"] <= character["Level"]:
-        if boss["name"] == "Amon, the God of Mischief":
-            wordle()
+        wordle()
     elif boss["alive"]:
-        print("Level too low. Come back if you're level" + boss["Level_required"])
+        print(f"Level too low. Come back if you're level {boss["Level_required"]}")
     else:
         print("This boss has already been defeated.")
 
@@ -49,8 +48,8 @@ def check_for_foes():
                     depending on the random outcome
     :return: True if a foe is encountered, False otherwise
     """
-    roll = random.randint(1, 4)  # returns an int between 1 and 100
-    if roll == 4:
+    roll = random.randint(1, 8)
+    if roll == 8:
         print("\033[93mTime freezes. A \033[95mman\033[93m appears from the darkness, "
               "adjusts his\033[95m monocle\033[93m and smiles at you.\033[0m")
         return True
