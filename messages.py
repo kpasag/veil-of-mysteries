@@ -1,4 +1,5 @@
 import json
+from itertools import cycle
 
 
 def get_user_choice():
@@ -46,11 +47,10 @@ def get_list_of_message_from_json(key):
     return json_data[key]
 
 
-def yield_text_from_json(key):
+def cycle_text_from_json(key):
     json_data = get_json()
-    for line in json_data[key]:
-        yield colorize_text(line)
-
+    colored_lines = [colorize_text(line) for line in json_data[key]]
+    return cycle(colored_lines)
 
 def print_text_from_json(key):
     json_data = get_json()
