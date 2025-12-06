@@ -32,6 +32,15 @@ def validate_move_message(character, board, direction):
         print("Please try again.")
 
 
+def generate_dialogue():
+    return {"Enzo_intro": cycle_text_from_json("Enzo_intro"),
+            "Hvin_intro": cycle_text_from_json("Hvin_intro"),
+            "Amon_intro": cycle_text_from_json("Amon_intro"),
+            "boss_defeated": cycle_text_from_json("boss_defeated"),
+            "player_lose_hp": cycle_text_from_json("player_lose_hp"),
+            "victory_cycle": cycle_text_from_json("victory_cycle")}
+
+
 def get_text_from_txt_file(file):
     with open(file) as file_object:
         words = [line.strip() for line in file_object]
@@ -51,7 +60,7 @@ def get_list_of_message_from_json(key):
 def cycle_text_from_json(key):
     json_data = get_json()
     colored_lines = [colorize_text(line) for line in json_data[key]]
-    return cycle(colored_lines)
+    yield from cycle(colored_lines)
 
 
 def return_text_from_json(key):
