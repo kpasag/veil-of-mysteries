@@ -1,6 +1,7 @@
-import game
+import messages
 import random
 from itertools import cycle
+
 
 def check_for_foes():
     """
@@ -17,9 +18,9 @@ def check_for_foes():
         return True
     else:
         backgrounds = []
-        message = get_player_lose_hp_message("ambience")
+        message = messages.get_list_of_message_from_json("ambience")
         for line in message:
-            backgrounds.append(line)
+            backgrounds.append(messages.colorize_text(line))
         print(random.choice(backgrounds))
         return False
 
@@ -62,7 +63,7 @@ def guessing_game(character):
 
 def player_lose_hp(character):
     character["Current HP"] -= 1
-    lose_hp_message = get_player_lose_hp_message("player_lose_hp")
+    lose_hp_message = messages.yield_text_from_json("player_lose_hp")
     print(f"\033[91mYou lost one HP. \nHP left: {character["Current HP"]}\033[0m")
     print(next(lose_hp_message))
 
