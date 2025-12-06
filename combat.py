@@ -2,6 +2,9 @@ import messages
 import random
 from itertools import cycle
 
+def generate_bosses(board):
+    possible_positions = list(board.keys())
+
 
 def check_for_foes():
     """
@@ -68,5 +71,28 @@ def player_lose_hp(character):
     print(next(lose_hp_message))
 
 
-def wordle(character):
-    pass
+def wordle_feedback(answer, user_guess):
+    guess_feedback = ""
+    for index in range(5):
+        if user_guess[index] == answer[index]:
+            guess_feedback += "{GREEN}" + user_guess[index]
+        else:
+            if user_guess[index] in answer:
+                guess_feedback += "{YELLOW}" + user_guess[index]
+            else:
+                guess_feedback += "{GREY}" + user_guess[index]
+    print(messages.colorize_text(guess_feedback + "{GREY}"))
+
+
+def wordle():
+    answers = messages.get_text_from_txt_file("answers.txt")
+    answer = random.choice(answers)
+    attempt = 0
+    while attempt < 6:
+        user_guess = input("Enter your guess: ")
+        if user_guess == answer:
+            print("You have defeated Amon")
+            break
+        else:
+            wordle_feedback(answer, user_guess)
+        attempt += 1

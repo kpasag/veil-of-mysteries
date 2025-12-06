@@ -30,6 +30,12 @@ def validate_move_message(character, board, direction):
         print("Please try again.")
 
 
+def get_text_from_txt_file(file):
+    with open(file) as file_object:
+        words = [line.strip() for line in file]
+    return words
+
+
 def get_json():
     with open('messages.json', 'r', encoding="utf-8") as data:
         return json.load(data)
