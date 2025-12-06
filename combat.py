@@ -33,7 +33,7 @@ def generate_bosses(board):
 
 def fight_boss(character, boss):
     if boss["alive"] and boss["Level_required"] <= character["Level"]:
-        wordle()
+        wordle(character, boss)
     elif boss["alive"]:
         print(f"Level too low. Come back if you're level {boss["Level_required"]}")
     else:
@@ -60,15 +60,6 @@ def check_for_foes():
             backgrounds.append(messages.colorize_text(line))
         print(random.choice(backgrounds))
         return False
-
-
-def check_player_level(character):
-    if character["Level"] <= 1:
-        guessing_game(character)
-    elif character["Level"] <= 2:
-        wordle()
-    elif character["Level"] <= 3:
-        pass
 
 
 def guessing_game(character):
@@ -115,18 +106,27 @@ def wordle_feedback(answer, user_guess):
                 guess_feedback += "{YELLOW}" + user_guess[index]
             else:
                 guess_feedback += "{GREY}" + user_guess[index]
-    print(messages.colorize_text(guess_feedback + "{GREY}").upper())
+    print(messages.colorize_text(guess_feedback.upper() + "{GREY}"))
 
 
-def wordle():
+def boss_defeated(character, boss):
+    character["Level"] += 1
+    boss["alive"] = False
+
+
+def wordle(character, boss):
     answers = messages.get_text_from_txt_file("answers.txt")
     answer = random.choice(answers)
     attempt = 0
     while attempt < 6:
         user_guess = input("Enter your guess: ").lower()
         if user_guess == answer:
-            print("You have defeated Amon")
+            text = f"{{GREEN}}Correct! Your answer {answer.upper()} was correct. You have defeated Amon{{GREY}}"
+            print(messages.colorize_text(text))
+            boss_defeated(character, boss)
             break
         else:
             wordle_feedback(answer, user_guess)
         attempt += 1
+    if attempt >= 6:
+        player_lose_hp(character)
