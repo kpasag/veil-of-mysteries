@@ -21,13 +21,16 @@
     "The unseen stirs — watching, waiting.",
     "",
     "You awaken as a fledgling Beyonder.",
-    "Your fate… is a coin on its edge,",
-    "tumbling between brilliance and madness.",
     "",
-    "Will you ascend?",
-    "Or will the horrors claim your mind?",
+    "{CYAN}Your Objective:{GREY}",
+    "Anomalies corrupt this city from within.",
+    "Three figures twist fate, pride, and reality itself.",
     "",
-    "Press ENTER to embrace your destiny…"
+    "Defeat them.",
+    "Grow stronger with every encounter.",
+    "Only power reveals the path ahead.",
+    "",
+    "Your investigation begins now…"
   ],
   "win_message": [
     "",
