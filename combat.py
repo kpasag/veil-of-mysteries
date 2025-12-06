@@ -120,12 +120,12 @@ def boss_defeated(character, boss):
     character["Level"] += 1
     character["Current HP"] += 1 + boss["Level_required"]
     boss["alive"] = False
-    print(messages.type_text(messages.colorize_text(next(messages.cycle_text_from_json("boss_defeated")))))
-    print(messages.type_text(messages.colorize_text(next(messages.cycle_text_from_json("victory_cycle")))))
+    messages.type_text(messages.colorize_text(next(messages.cycle_text_from_json("boss_defeated"))))
+    messages.type_text(messages.colorize_text(next(messages.cycle_text_from_json("victory_cycle"))))
 
 
 def wordle(character, boss):
-    print(messages.type_text(messages.colorize_text(next(messages.cycle_text_from_json("Hvin_intro")))))
+    messages.type_text(messages.colorize_text(next(messages.cycle_text_from_json("Hvin_intro"))))
     answers = messages.get_text_from_txt_file("answers.txt")
     answer = random.choice(answers)
     attempt = 0
@@ -170,7 +170,7 @@ def play_round(answer):
 
 
 def anagram_game(character, boss):
-    print(messages.type_text(messages.colorize_text(next(messages.cycle_text_from_json("Amon_intro")))))
+    messages.type_text(messages.colorize_text(next(messages.cycle_text_from_json("Amon_intro"))))
     answers = messages.get_text_from_txt_file("anagrams.txt")
     answer = random.choice(answers)
     scrambled = "".join(random.sample(answer, len(answer)))
@@ -203,8 +203,8 @@ def play_dice_round():
 
 
 def dice_duel(character, boss):
-    print(messages.type_text(messages.colorize_text(next(messages.cycle_text_from_json("Enzo_intro")))))
-    print(messages.colorize_text(f"{{YELLOW}}{boss["name"]} challenges you to dice!{{GREY}}"))
+    messages.type_text(messages.colorize_text(next(messages.cycle_text_from_json("Enzo_intro"))))
+    messages.colorize_text(f"{{YELLOW}}{boss["name"]} challenges you to dice!{{GREY}}")
     player_score, boss_score = dice_duel_rounds()
     if player_score == 2:
         boss_defeated(character, boss)
