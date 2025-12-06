@@ -141,7 +141,7 @@ def validate_move(board: dict[tuple[int, int], str], character: Dict[str, int], 
         return True
 
 
-def check_if_goal_attained(bosses: list[dict[str, int]]) -> bool:
+def check_if_goal_attained(bosses: tuple[dict[str, int | str | bool], ...]) -> bool:
     """
     """
     for boss in bosses:
