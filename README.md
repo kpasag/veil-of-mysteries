@@ -59,7 +59,7 @@ Open a terminal in the project folder and run:
 Mac/Linux:
 
 ```bash
-python game.py
+python3 game.py
 ```
 
 Windows:
