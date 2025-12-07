@@ -166,8 +166,8 @@ def validate_move(board: dict[tuple[int, int], str], character: dict[str, int], 
         return False
     try:
         board[target]
-    except KeyError as key_error:
-        print(key_error)
+    except KeyError:
+        messages.validate_move_message(character, board, direction)
         return False
     else:
         return True

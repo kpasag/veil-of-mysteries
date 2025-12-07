@@ -46,11 +46,11 @@ def validate_move_message(character: dict[str, int], board: dict[tuple[int, int]
     max_col = max(coordinate[1] for coordinate in board.keys())
     if direction == "w" and y_position == 0:
         print("You can't go further north.")
-    elif direction == "s" and y_position == max_col:
+    elif direction == "d" and x_position == max_row:
         print("You can't go further east.")
     elif direction == "a" and x_position == 0:
         print("You can't go further west.")
-    elif direction == "d" and x_position == max_row:
+    elif direction == "s" and y_position == max_col:
         print("You can't go further south.")
     else:
         print("Please try again.")
