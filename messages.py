@@ -1,3 +1,15 @@
+"""
+Kyle Pasag
+A01428389
+
+Module for handling in-game text and dialogue management.
+
+This module loads and formats text from external files, including both JSON
+and plain text resources. It provides functions for retrieving messages,
+cycling dialogue lines, replacing color tokens with ANSI codes, and typing
+animated text to the console, all of which support narrative and visual
+feedback in the game.
+"""
 import json
 import time
 from itertools import cycle
@@ -22,7 +34,8 @@ def validate_move_message(character: dict[str, int], board: dict[tuple[int, int]
     Display a message if the user attempts to move in an invalid direction.
 
     :param character: a dictionary storing X and Y coordinates of the character
-    :param board: a dictionary where keys are coordinate tuples in the map
+    :param board: a dictionary representing the game board, where keys are a row and a column
+                  that represent a coordinate and the value is the room description
     :param direction: a lowercase string representing the movement direction
                       ('w', 'a', 's', or 'd)
     :precondition: character and board are a dictionary and direction is a string
