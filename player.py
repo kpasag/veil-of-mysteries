@@ -5,7 +5,7 @@ def move_character(character: dict[str, int], direction: str) -> None:
 
     :param character: a dictionary storing X and Y coordinates of the character
     :param direction: a lowercase string representing the movement direction
-                      ('w', 'a', 's', or 'sd)
+                      ('w', 'a', 's', or 'd)
     :precondition: character is a dictionary and direction is a string
     :postcondition: modifies the character dictionary to reflect the new coordinates
                     based on the chosen direction
