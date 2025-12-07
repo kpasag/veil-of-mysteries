@@ -9,7 +9,7 @@ def get_user_choice() -> str:
     Prompts the player for a direction to move.
 
     :postcondition: lower cases the players input and removes extra spaces in-between
-    :return: the adjusting input as a string
+    :return: the adjusted input as a string
     """
     type_text("\nWhich way will you go?\n"
               "'\033[96mW\033[0m' to go up, '\033[96mS\033[0m' to go down,"
@@ -18,6 +18,16 @@ def get_user_choice() -> str:
 
 
 def validate_move_message(character: dict[str, int], board: dict[tuple[int, int], str], direction: str) -> None:
+    """
+    Display a message if the user attempts to move in an invalid direction.
+
+    :param character: a dictionary storing X and Y coordinates of the character
+    :param board: a dictionary where keys are coordinate tuples in the map
+    :param direction: a lowercase string representing the movement direction
+                      ('w', 'a', 's', or 'd)
+    :precondition: character and board are a dictionary and direction is a string
+    :postcondition: check if direction is valid and print a response
+    """
     x_position, y_position = character["X-coordinate"], character["Y-coordinate"]
     max_row = max(coordinate[0] for coordinate in board.keys())
     max_col = max(coordinate[1] for coordinate in board.keys())
@@ -34,6 +44,13 @@ def validate_move_message(character: dict[str, int], board: dict[tuple[int, int]
 
 
 def generate_dialogue() -> dict[str, Generator[str, None, None]]:
+    """
+    Create a mapping of dialogue category names to cycling text generators.
+
+    :precondition: messages.json must be present and correctly formatted
+    :postcondition: returns a dictionary where each value cycles through themed text lines
+    :return: dictionary mapping dialogue names to generators that yield colored strings
+    """
     return {"Enzo_intro": cycle_text_from_json("Enzo_intro"),
             "Hvin_intro": cycle_text_from_json("Hvin_intro"),
             "Amon_intro": cycle_text_from_json("Amon_intro"),
