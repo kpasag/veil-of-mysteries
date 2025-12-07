@@ -76,7 +76,7 @@ def display_current_location(character: dict[str, int], bosses: tuple[dict[str, 
             if (column, row) == (character["X-coordinate"], character["Y-coordinate"]):
                 row_display += " P"
             else:
-                icon = " #" if random.random() < 0.3 else " ."
+                icon = " #" if random.random() < 0.2 else " ."
                 for boss in bosses:
                     if boss["alive"] and boss["X-coordinate"] == column and boss["Y-coordinate"] == row:
                         icon = " ?" if boss["Level_required"] > character["Level"] else " B"
