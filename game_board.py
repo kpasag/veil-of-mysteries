@@ -1,3 +1,13 @@
+"""
+Kyle Pasag
+A01428389
+
+Module for creating the game board.
+
+This module generates the dictionary-based grid that represents all playable
+positions in the world map. Each coordinate pair is assigned a randomly
+selected room description that the player can explore during the game.
+"""
 import random
 import messages
 

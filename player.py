@@ -1,3 +1,15 @@
+"""
+Kyle Pasag
+A01428389
+
+Module for player data and character-related logic.
+
+This module initializes the player’s starting stats and handles basic gameplay
+operations such as movement and life checks. It stores the player’s position
+and status throughout the game.
+"""
+
+
 def move_character(character: dict[str, int], direction: str) -> None:
     """
     Move the character one space in the given direction.
