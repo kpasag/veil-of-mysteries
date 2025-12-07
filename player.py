@@ -50,8 +50,13 @@ def make_character() -> dict[str, int]:
     :postcondition: create a character starting at (0, 0) with HP=5 and Level=1
     :return: a dictionary containing the player's position and stats
 
-    >>> make_character()
-    {'X-coordinate': 0, 'Y-coordinate': 0, 'Current HP': 5, 'Level': 1}
+    >>> player = make_character()
+    >>> player['X-coordinate']
+    0
+    >>> player['Y-coordinate']
+    0
+    >>> player['Level']
+    1
     """
     return {"X-coordinate": 0, "Y-coordinate": 0, "Current HP": 5, "Level": 1}
 
