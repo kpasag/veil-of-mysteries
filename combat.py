@@ -17,6 +17,15 @@ from typing import Callable, Generator
 
 def generate_boss_positions(board: dict[tuple[int, int], str]) \
         -> tuple[tuple[int, int], tuple[int, int], tuple[int, int]]:
+    """
+    Select three unique positions on the board for boss placement.
+
+    :param board: a dictionary representing the game board, where keys are a row and a column
+                  that represent a coordinate and the value is the room description
+    :precondition: board must contain at least three valid coordinate keys
+    :postcondition: generate three separate coordinates not equal to the starting position (0, 0)
+    :return: a tuple containing three (row, column) coordinate tuples
+    """
     possible_positions = list(board.keys())
     possible_positions.remove((0, 0))
     boss_one_pos = random.choice(possible_positions)
@@ -28,6 +37,15 @@ def generate_boss_positions(board: dict[tuple[int, int], str]) \
 
 
 def generate_bosses(board: dict[tuple[int, int], str]) -> tuple[dict[str, int | str | bool], ...]:
+    """
+    Create the three boss dictionaries and assign each a position.
+
+    :param board: a dictionary representing the game board, where keys are a row and a column
+                  that represent a coordinate and the value is the room description
+    :precondition: board must contain at least three valid coordinate keys
+    :postcondition: returns three boss dictionaries with name, alive status, coordinates, and required level
+    :return: a tuple of boss dictionaries
+    """
     boss_one_pos, boss_two_pos, boss_three_pos = generate_boss_positions(board)
     boss_one = {
         "name": "Enzo, the Winner", "X-coordinate": boss_one_pos[0], "Y-coordinate": boss_one_pos[1],
