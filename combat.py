@@ -147,8 +147,9 @@ def player_lose_hp(character: dict[str, int], dialogue: dict[str, Generator[str,
     :precondition: character contains "Current HP" key
     :postcondition: reduces HP and prints related dialogue
     """
-    character["Current HP"] -= 1
-    messages.type_text(f"\033[91mYou lost one HP. \nHP left: {character["Current HP"]}\033[0m", 0.01)
+    character["Current HP"] -= character["Level"]
+    messages.type_text(f"\033[91mYou lost {character["Level"]} HP. \nHP left: "
+                       f"{character["Current HP"]}\033[0m", 0.01)
     messages.type_text(next(dialogue["player_lose_hp"]))
 
 
