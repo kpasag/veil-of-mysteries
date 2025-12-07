@@ -87,7 +87,7 @@
   "boss_defeated": [
     "{YELLOW}\"Hah. Fortune bends in your favor today.\nBut luck is a coin that never stops flipping — and one day, it lands on its edge.\"{GREY}",
     "{BLUE}\"You impose order on the chaos of letters... impressive.\nThe fog loosens its hold on you — but do not assume clarity lasts forever.\"{GREY}",
-    "{PURPLE}Amon pauses, monocle catching the faintest glow.{GREY} {GREEN}\"So you reach your ending...\nor your beginning.\nAscend — if you believe your mind can bear the truth.\"{GREY}"
+    "{PURPLE}Amon pauses, monocle catching the faintest glow.{GREY} {PURPLE}\"So you reach your ending...\nor your beginning.\nAscend — if you believe your mind can bear the truth.\"{GREY}"
   ],
   "victory_cycle": [
     "{GREEN}Levelled up! Power settles into your veins… stronger than before.{GREY}",
