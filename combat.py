@@ -178,7 +178,7 @@ def boss_defeated(character: dict[str, int], boss: dict[str, int | str | bool],
     """
     Update stats and dialogue upon defeating a boss.
 
-    :param character: a dictionary storing the character's stats such as Current HP and Level
+    :param character: a dictionary storing the character's stats including Level
     :param boss: a dictionary storing boss status including "alive"
     :param dialogue: a dictionary mapping dialogue keys to text generators
     :precondition: character and boss must contain valid stats
@@ -194,6 +194,19 @@ def boss_defeated(character: dict[str, int], boss: dict[str, int | str | bool],
 
 def wordle(character: dict[str, int], boss: dict[str, int | str | bool],
            dialogue: dict[str, Generator[str, None, None]]) -> None:
+    """
+    Run a Wordle-style word guessing challenge against a boss.
+
+    :param character: a dictionary storing the character's stats including Level
+    :param boss: a dictionary storing boss information including its name and alive
+                 status
+    :param dialogue: a dictionary mapping dialogue keys to generators that yield
+                     formatted text lines
+    :precondition: character contains the key "Current HP" and boss contains the
+                   keys used in this function
+    :postcondition: defeats the boss on success, reduces HP on failure, or asks
+                    the player if they want to retry
+    """
     messages.type_text(next(dialogue["Hvin_intro"]))
     messages.type_text(messages.colorize_text(f"{{BLUE}}{boss["name"]} challenges you to a game of wordle!{{GREY}}"))
     answers = messages.get_text_from_txt_file("answers.txt")
@@ -214,6 +227,19 @@ def wordle(character: dict[str, int], boss: dict[str, int | str | bool],
 def ask_retry(character: dict[str, int], boss: dict[str, int | str | bool], function: Callable[
     [dict[str, int], dict[str, int | str | bool], dict[str, Generator[str, None, None]]], None],
               dialogue: dict[str, Generator[str, None, None]]) -> None:
+    """
+    Ask the player if they want to retry a boss challenge.
+
+    :param character: a dictionary storing the character's stats including Level
+    :param boss: a dictionary storing boss information including alive status
+    :param function: a callable that reruns the challenge when the player
+                     chooses to retry
+    :param dialogue: a dictionary mapping dialogue keys to generators that
+                     yield formatted text lines
+    :precondition: function accepts (character, boss, dialogue) as parameters
+    :postcondition: reruns the given function on 'y', stops on 'n', or
+                    reprompts on invalid input
+    """
     user_input = input("Try again? (y/n): ").lower().strip()
     try:
         valid = user_input[0]
@@ -231,6 +257,14 @@ def ask_retry(character: dict[str, int], boss: dict[str, int | str | bool], func
 
 
 def play_round(answer: str) -> bool:
+    """
+    Execute a single word-guessing round.
+
+    :param answer: the correct target word
+    :precondition: answer is a non-empty string of letters
+    :postcondition: prints feedback about the player's guess
+    :return: True if the player guessed the word exactly, otherwise False
+    """
     user_guess = input(f"Enter your {len(answer)}-letter guess: ").lower().strip()
     if len(user_guess) != len(answer):
         print(f"Guess must be exactly {len(answer)} letters!")
@@ -243,6 +277,18 @@ def play_round(answer: str) -> bool:
 
 def anagram_game(character: dict[str, int], boss: dict[str, int | str | bool],
                  dialogue: dict[str, Generator[str, None, None]]) -> None:
+    """
+    Run an anagram unscrambling challenge against a boss.
+
+    :param character: a dictionary storing the character's stats including Level
+    :param boss: a dictionary storing boss information including alive status
+    :param dialogue: a dictionary mapping dialogue keys to generators that
+                     yield formatted text lines
+    :precondition: character contains the key "Current HP" and boss contains the
+                   keys used in this function
+    :postcondition: defeats the boss on success, reduces HP on failure, or asks
+                    the player if they want to retry
+    """
     messages.type_text(next(dialogue["Amon_intro"]))
     messages.type_text(messages.colorize_text(f"{{PURPLE}}{boss["name"]} challenges you to a game of anagram!{{GREY}}"))
     answers = messages.get_text_from_txt_file("anagrams.txt")
@@ -263,6 +309,13 @@ def anagram_game(character: dict[str, int], boss: dict[str, int | str | bool],
 
 
 def play_dice_round() -> int:
+    """
+    Play a single round of the dice duel.
+
+    :precondition: none
+    :postcondition: prints roll results and round outcome
+    :return: 1 if the player wins the round, -1 if the boss wins, or 0 for a tie
+    """
     player_roll = random.randint(1, 6)
     boss_roll = random.randint(1, 6)
     roll_message = f"You rolled:{{CYAN}} {player_roll}{{GREY}} | Boss rolled:{{YELLOW}} {boss_roll}{{GREY}}"
@@ -279,6 +332,17 @@ def play_dice_round() -> int:
 
 def dice_duel(character: dict[str, int], boss: dict[str, int | str | bool],
               dialogue: dict[str, Generator[str, None, None]]) -> None:
+    """
+    Run the full dice duel challenge against a boss.
+
+    :param character: a dictionary storing the character's stats including Level
+    :param boss: a dictionary storing boss information including alive status
+    :param dialogue: a dictionary mapping dialogue keys to generators that
+                     yield formatted text lines
+    :precondition: character and boss contain the keys used in this function
+    :postcondition: defeats the boss if the player wins two rounds, otherwise
+                    reduces HP and may ask for a retry
+    """
     messages.type_text(next(dialogue["Enzo_intro"]))
     messages.type_text(messages.colorize_text(f"{{YELLOW}}{boss["name"]} challenges you to a game of dice!{{GREY}}"))
     player_score, boss_score = dice_duel_rounds()
@@ -292,6 +356,13 @@ def dice_duel(character: dict[str, int], boss: dict[str, int | str | bool],
 
 
 def dice_duel_rounds() -> tuple[int, int]:
+    """
+    Play multiple dice rounds until either the player or the boss reaches two wins.
+
+    :precondition: player presses enter in his keyboard
+    :postcondition: prints the outcome of each round
+    :return: a tuple (player_score, boss_score) representing the final scores
+    """
     player_score = 0
     boss_score = 0
     while player_score < 2 and boss_score < 2:
