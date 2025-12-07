@@ -64,6 +64,15 @@ def generate_bosses(board: dict[tuple[int, int], str]) -> tuple[dict[str, int | 
 
 def fight_boss(character: dict[str, int], boss: dict[str, int | str | bool],
                dialogue: dict[str, Generator[str, None, None]]) -> None:
+    """
+    Handle boss encounters depending on player level and boss status.
+
+    :param character: a dictionary storing the character's stats including Level
+    :param boss: a dictionary describing boss characteristics and required level
+    :param dialogue: a dictionary mapping dialogue keys to text generators
+    :precondition: boss and character must contain relevant keys such as "Level" and "alive"
+    :postcondition: launches a challenge or denies access based on Level
+    """
     if boss["alive"] and boss["Level_required"] <= character["Level"]:
         messages.type_text(messages.colorize_text(f"{{RED}}You are in the presence of {boss["name"]}.{{GREY}}"))
         if boss["name"] == "Enzo, the Winner":
@@ -104,6 +113,12 @@ def check_for_foes() -> bool:
 
 def guessing_game(character: dict[str, int], dialogue: dict[str, Generator[str, None, None]]) -> None:
     """
+    Play a guessing challenge with a randomly chosen number.
+
+    :param character: a dictionary storing the character's stats including Level
+    :param dialogue: a dictionary mapping dialogue keys to text generators
+    :precondition: character and dialogue are a dictionary
+    :postcondition: deducts HP on failure or prints success message
     """
     secret_number = random.randint(1, 5)
     while True:
@@ -124,12 +139,28 @@ def guessing_game(character: dict[str, int], dialogue: dict[str, Generator[str, 
 
 
 def player_lose_hp(character: dict[str, int], dialogue: dict[str, Generator[str, None, None]]) -> None:
+    """
+    Reduce the player's HP by one and display a loss message.
+
+    :param character: a dictionary storing the character's stats including Level
+    :param dialogue: a dictionary mapping dialogue keys to text generators
+    :precondition: character contains "Current HP" key
+    :postcondition: reduces HP and prints related dialogue
+    """
     character["Current HP"] -= 1
     messages.type_text(f"\033[91mYou lost one HP. \nHP left: {character["Current HP"]}\033[0m", 0.01)
     messages.type_text(next(dialogue["player_lose_hp"]))
 
 
 def input_feedback(answer: str, user_guess: str) -> None:
+    """
+    Display color-coded feedback for correct or incorrect guess letters.
+
+    :param answer: the correct word
+    :param user_guess: the player's guess of equal length
+    :precondition: both strings must contain alphabetic characters only
+    :postcondition: prints feedback for each character in guess
+    """
     guess_feedback = ""
     for index in range(len(answer)):
         if user_guess[index] == answer[index]:
@@ -144,6 +175,16 @@ def input_feedback(answer: str, user_guess: str) -> None:
 
 def boss_defeated(character: dict[str, int], boss: dict[str, int | str | bool],
                   dialogue: dict[str, Generator[str, None, None]]) -> None:
+    """
+    Update stats and dialogue upon defeating a boss.
+
+    :param character: a dictionary storing the character's stats such as Current HP and Level
+    :param boss: a dictionary storing boss status including "alive"
+    :param dialogue: a dictionary mapping dialogue keys to text generators
+    :precondition: character and boss must contain valid stats
+    :postcondition: increases Level, increases HP, and marks boss as defeated
+    :return: none
+    """
     character["Level"] += 1
     character["Current HP"] += 1 + boss["Level_required"]
     boss["alive"] = False
