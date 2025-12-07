@@ -74,21 +74,22 @@ py game.py
 
 | Requirement                                   | Where It Appears                             |
 |-----------------------------------------------|----------------------------------------------|
-| Tuples used (immutable coords)                | `game_board.py` lines ~14–18                 |
+| Tuples used (immutable coords)                | `game_board.py` lines ~27                    |
 | Dictionaries/lists used correctly             | `player.py`, `game_board.py`, `messages.py`  |
-| Exceptions prevent crashes                    | `combat.py` lines ~109–123, ~369-372         |
+| Exceptions prevent crashes                    | `combat.py` lines ~245–249, `game.py` ~168   |
 | No unnecessary global state                   | Verified                                     |
 | Code decomposed into short reusable functions | Entire project (<15 lines each)              |
 | Flat, readable structure                      | Verified in all modules                      |
-| List comprehension used                       | `messages.py` line ~76                       |
+| List comprehension used                       | `messages.py` line ~85                       |
+| Dictionary comprehension used                 | `game_board.py` ~27                          |
 | If-statements for decisions                   | `game.py` movement logic                     |
 | Proper use of loops                           | Minigames in `combat.py`                     |
-| Membership operator `in`                      | Wordle feedback — `combat.py` line ~88       |
+| Membership operator `in`                      | `combat.py` ~108, 166, 170                   |
 | `range()` used appropriately                  | Wordle loop — `combat.py` line ~82           |
 | `itertools.cycle()` used                      | Boss dialog cycling — `messages.py` line ~41 |
 | Random module for encounters                  | `combat.py` boss events & dice rolls         |
 | Function annotations included                 | In all functions                             |
-| Doctests included for returning functions     | `game.py` ~98–118                            |
+| Doctests included for returning functions     | Verified                                     |
 | All output formatted using f-strings          | Verified throughout                          |
 | No single-letter variable names               | Verified across codebase                     |
 
