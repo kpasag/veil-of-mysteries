@@ -1,3 +1,14 @@
+"""
+Kyle Pasag
+A01428389
+
+Module for boss encounters and challenge mechanics.
+
+This module manages the placement and properties of all bosses,
+and implements the interactive mini-games the player must complete
+to defeat them. It handles win and loss outcomes for encounters and
+keeps track of boss state as the player progresses.
+"""
 import messages
 import random
 import player
