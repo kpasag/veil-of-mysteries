@@ -60,28 +60,67 @@ def generate_dialogue() -> dict[str, Generator[str, None, None]]:
 
 
 def get_text_from_txt_file(file: str) -> list[str]:
+    """
+    Read a list of lines from a text file.
+
+    :param file: a string representing the file name to read
+    :precondition: file must exist and be a valid text file
+    :postcondition: strip every line and store it in a list
+    :return: the list containing the file strings
+    """
     with open(file) as file_object:
         words = [line.strip() for line in file_object]
     return words
 
 
 def get_json() -> dict[str, list[str]]:
+    """
+    Load and return JSON data from the messages json file.
+
+    :precondition: messages.json file must exist and contain valid JSON
+    :postcondition: returns a dictionary loaded from the JSON file
+    :return: a dictionary of message lists
+    """
     with open('messages.json', 'r', encoding="utf-8") as data:
         return json.load(data)
 
 
 def get_list_of_message_from_json(key: str) -> list[str]:
+    """
+    Retrieve a list of message strings by key from JSON.
+
+    :param key: a string representing the key name in the json file
+    :precondition: key is a string and exists in the json file
+    :postcondition: get the list from the json file
+    :return: the list from the json file
+    """
     json_data = get_json()
     return json_data[key]
 
 
 def cycle_text_from_json(key: str) -> Generator[str, None, None]:
+    """
+    Yield an infinite cycle of colored message lines from JSON.
+
+    :param key: a string representing the key name in the json file
+    :precondition: key is a string and exists in the json file
+    :postcondition: creates an endless generator cycling formatted text
+    :return: generator that yields colored lines of text forever
+    """
     json_data = get_json()
     colored_lines = [colorize_text(line) for line in json_data[key]]
     yield from cycle(colored_lines)
 
 
 def return_text_from_json(key: str) -> str:
+    """
+    Create a single formatted string by joining all lines of a message block.
+
+    :param key: a string representing the key name in the json file
+    :precondition: key is a string and exists in the json file
+    :postcondition: produces a newline-separated formatted message block
+    :return: the colored and newline-joined string
+    """
     json_data = get_json()
     text = ""
     for line in json_data[key]:
@@ -90,6 +129,14 @@ def return_text_from_json(key: str) -> str:
 
 
 def colorize_text(text: str) -> str:
+    """
+    Convert formatting tokens into terminal ANSI color codes.
+
+    :param text: string that may contain color tokens like {RED} or {CYAN}
+    :precondition: text must be a string
+    :postcondition: converts the tokens inside the string into ANSI color codes
+    :return: colored string
+    """
     colours = {"{PURPLE}": "\033[95m", "{RED}": "\033[91m", "{GREEN}": "\033[92m", "{YELLOW}": "\033[93m",
                "{BLUE}": "\033[94m", "{CYAN}": "\033[96m", "{GREY}": "\033[0m"}
     for key, value in colours.items():
@@ -98,11 +145,27 @@ def colorize_text(text: str) -> str:
 
 
 def get_full_text(key: str) -> str:
+    """
+    Return a colored multi-line block of text for a JSON key.
+
+    :param key: a string representing the key name in the json file
+    :precondition: key is a string and exists in the json file
+    :postcondition: converts the list of strings into one full string
+    :return: the converted string
+    """
     json_data = get_json()
     return "\n".join(colorize_text(line) for line in json_data[key])
 
 
 def type_text(text: str, delay: float = 0.03) -> None:
+    """
+    Print the given text character-by-character with a delay.
+
+    :param text: full string to type out
+    :param delay: per-character delay in seconds
+    :precondition: text is a string, delay is a non-negative float
+    :postcondition: displays text with typing animation effect
+    """
     for letter in text:
         print(letter, end="", flush=True)
         time.sleep(delay)
