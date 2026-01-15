@@ -74,8 +74,6 @@ Planned upgrades to bring this from a course project to a portfolio project:
 This repository is maintained as a portfolio project. Academic submission details (course info, rubric mapping, etc.) are intentionally kept out of the main README to keep this page employer-focused.
 
 ## License
-
-## License
 MIT License © 2026 Kyle Pasag. See the [LICENSE](LICENSE) file for details.
 
 ## Author
