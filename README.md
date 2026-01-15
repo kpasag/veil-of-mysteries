@@ -1,4 +1,4 @@
-# TINGEN’S VEIL
+# Veil of Mysteries
 
 *A Lord of the Mysteries–Themed Text RPG*
 
