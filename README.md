@@ -75,7 +75,8 @@ This repository is maintained as a portfolio project. Academic submission detail
 
 ## License
 
-Add a `LICENSE` file (MIT recommended) if you want this to be clearly reusable.
+## License
+MIT License © 2026 Kyle Pasag. See the [LICENSE](LICENSE) file for details.
 
 ## Author
 
