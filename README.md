@@ -1,6 +1,8 @@
 # Veil of Mysteries
 
-A text-based RPG where you explore a fog-covered grid maze, discover encounters, and clear three challenge-based bosses to escape.
+Veil of Mysteries is a text-based Python RPG inspired by Lord of the Mysteries by Cuttlefish That Loves Diving. You explore a fog-covered 10×10 grid maze, trigger random encounters, and level up by winning fights so you can challenge three bosses and escape before your HP hits 0.
+
+What makes it fun is the variety in the boss gates: instead of pure combat, each boss is tied to a different minigame (dice duel, Wordle-style guessing, and an anagram challenge). The project is also organized into clear modules (game loop, board/movement, player stats, combat/minigames, and message handling) and includes input validation to keep gameplay smooth.
 
 ## Key Features
 
